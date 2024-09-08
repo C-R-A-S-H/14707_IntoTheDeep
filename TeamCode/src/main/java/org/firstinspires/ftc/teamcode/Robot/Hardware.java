@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNumTestBed;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
@@ -20,13 +22,18 @@ public class Hardware {
     public MotorEx BlMotor;
     public MotorEx BrMotor;
 
+    public MotorEx LeftEncoder;
+    public MotorEx RightEncoder;
+    public MotorEx MiddleEncoder;
 
     public IMU imu;
     public HardwareMap hmap;
-    public SparkFunOTOS otos;
+    //public SparkFunOTOS otos;
 
-    public AprilTagProcessor aprilTag;
-    public VisionPortal visionPortal;
+    //public AprilTagProcessor aprilTag;
+    //public VisionPortal visionPortal;
+
+    public NumNumTestBed drivetrain;
 
     public static Hardware getInstance(){
         if(instance == null){
@@ -41,12 +48,26 @@ public class Hardware {
         this.FrMotor = new MotorEx(hmap,"FrontRight");
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
-        this.otos = hmap.get(SparkFunOTOS.class, "otos");
+
+        this.drivetrain = new NumNumTestBed();
+
+        double TICKS_TO_INCHES = 15.3;
+
+        this.LeftEncoder = new MotorEx(hmap, "leftEncoder");
+        this.MiddleEncoder = new MotorEx(hmap, "middleEncoder");
+        this.RightEncoder = new MotorEx(hmap, "rightEncoder");
+
+        this.LeftEncoder.setDistancePerPulse(TICKS_TO_INCHES);
+        this.MiddleEncoder.setDistancePerPulse(TICKS_TO_INCHES);
+        this.RightEncoder.setDistancePerPulse(TICKS_TO_INCHES);
+
+        this.drivetrain.init();
+        //this.otos = hmap.get(SparkFunOTOS.class, "otos");
         this.imu = hmap.get(IMU.class, "imu");
 
-        aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        visionPortal = VisionPortal.easyCreateWithDefaults(
-                hmap.get(WebcamName.class, "Webcam 1"), aprilTag);
+        //aprilTag = AprilTagProcessor.easyCreateWithDefaults();
+        //visionPortal = VisionPortal.easyCreateWithDefaults(
+                //hmap.get(WebcamName.class, "Webcam 1"), aprilTag);
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -58,5 +79,7 @@ public class Hardware {
     public void Loop(){
 
     }
+
+
 
 }
