@@ -33,15 +33,6 @@ public class NumNumTestBed extends PedrioSubsystem {
             new Translation2d(-LENGTH / 2, -WIDTH / 2)
     );
 
-    HolonomicOdometry holOdom;
-
-    // create the odometry subsystem
-    OdometrySubsystem odometry;
-
-
-    public Pose2d getPose(){
-        return odometry.getPose();
-    }
     public void driveFieldCentric(double x, double y, double turn, double gyroAngle) {
         drive.driveFieldCentric(x, y, turn, gyroAngle);
     }
@@ -61,13 +52,7 @@ public class NumNumTestBed extends PedrioSubsystem {
 
     @Override
     public void init() {
-        holOdom =  new HolonomicOdometry(
-                robot.LeftEncoder::getDistance,
-                robot.RightEncoder::getDistance,
-                robot.MiddleEncoder::getDistance,
-                TRACKWIDTH, CENTER_WHEEL_OFFSET
-        );
-        odometry = new OdometrySubsystem(holOdom);
+
     }
 
     @Override

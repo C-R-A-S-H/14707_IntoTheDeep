@@ -9,18 +9,19 @@ import org.firstinspires.ftc.teamcode.Robot.Hardware;
 @TeleOp(name = "NumNumTestBed")
 public class NumNumTest extends OpMode {
     private Hardware robot = Hardware.getInstance();
-    private Gamepad driver = new Gamepad();
+    static final double TRACKWIDTH = 16;
+    static final double CENTER_WHEEL_OFFSET = 2.4;
 
     @Override
     public void init() {
-        driver.setGamepadId(0);
-        robot.Init(hardwareMap);
+        this.robot.Init(hardwareMap);
 
     }
 
     @Override
     public void loop() {
         this.robot =  Hardware.getInstance();
+        this.robot.Loop();
 
         this.robot.drivetrain.driveFieldCentric(-gamepad1.left_stick_x,
                 gamepad1.left_stick_y,
@@ -31,6 +32,6 @@ public class NumNumTest extends OpMode {
             this.robot.imu.resetYaw();
         }
 
-        telemetry.addData("ODO pose", this.robot.drivetrain.getPose());
+
     }
 }

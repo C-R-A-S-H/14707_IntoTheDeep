@@ -77,7 +77,7 @@ public class Hardware {
 
     }
     public void Loop(){
-
+        this.drivetrain.periodic();
     }
 
 
