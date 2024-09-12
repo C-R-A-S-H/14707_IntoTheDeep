@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Pedrio;
 
-public abstract class PedrioSubsystem {
+import com.arcrobotics.ftclib.command.Subsystem;
+
+public abstract class PedrioSubsystem implements Subsystem {
     public abstract void init();
     public abstract void periodic();
 
