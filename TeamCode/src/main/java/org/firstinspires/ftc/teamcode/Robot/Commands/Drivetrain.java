@@ -1,19 +1,18 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
 
 import java.util.function.DoubleSupplier;
 
-public class SampleCommand extends CommandBase {
+public class Drivetrain extends CommandBase {
     private NumNumDrivetrain Subsystem;
     private DoubleSupplier xval;
     private DoubleSupplier yval;
     private DoubleSupplier zval;
 
-    public SampleCommand(NumNumDrivetrain subsystem, DoubleSupplier xval, DoubleSupplier yval, DoubleSupplier zval){
+    public Drivetrain(NumNumDrivetrain subsystem, DoubleSupplier xval, DoubleSupplier yval, DoubleSupplier zval){
         this.xval = xval;
         this.yval = yval;
         this.zval = zval;
