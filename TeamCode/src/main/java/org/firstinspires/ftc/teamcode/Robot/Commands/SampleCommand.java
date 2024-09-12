@@ -20,10 +20,6 @@ public class SampleCommand extends CommandBase {
         this.Subsystem = subsystem;
         addRequirements(this.Subsystem);
     }
-    @Override
-    public void initialize() {
-        super.initialize();
-    }
 
     @Override
     public void execute() {
@@ -32,6 +28,6 @@ public class SampleCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        return false;
     }
 }
