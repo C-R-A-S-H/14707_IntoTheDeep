@@ -1,16 +1,12 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNumTestBed;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers.ThreeWheelIMULocalizer;
 
 
 public class Hardware {
@@ -26,6 +22,8 @@ public class Hardware {
     public MotorEx RightEncoder;
     public MotorEx MiddleEncoder;
 
+    public ThreeWheelIMULocalizer localizer;
+
     public IMU imu;
     public HardwareMap hmap;
     //public SparkFunOTOS otos;
@@ -33,7 +31,7 @@ public class Hardware {
     //public AprilTagProcessor aprilTag;
     //public VisionPortal visionPortal;
 
-    public NumNumTestBed drivetrain;
+    public NumNumDrivetrain drivetrain;
 
     public static Hardware getInstance(){
         if(instance == null){
@@ -49,7 +47,7 @@ public class Hardware {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
 
-        this.drivetrain = new NumNumTestBed();
+        this.drivetrain = new NumNumDrivetrain();
 
         double TICKS_TO_INCHES = 15.3;
 
@@ -75,9 +73,12 @@ public class Hardware {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
 
+        this.localizer = new ThreeWheelIMULocalizer(hmap);
+
     }
     public void Loop(){
         this.drivetrain.periodic();
+        this.localizer.update();
     }
 
 

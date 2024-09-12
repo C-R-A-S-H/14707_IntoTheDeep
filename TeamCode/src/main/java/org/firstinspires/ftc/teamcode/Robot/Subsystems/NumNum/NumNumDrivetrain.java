@@ -1,23 +1,16 @@
-package org.firstinspires.ftc.teamcode.Robot.Subsystems;
+package org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum;
 
-import com.arcrobotics.ftclib.command.OdometrySubsystem;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.geometry.Pose2d;
-import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
-import com.arcrobotics.ftclib.kinematics.HolonomicOdometry;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 
-import java.util.ArrayList;
 
-
-public class NumNumTestBed extends PedrioSubsystem {
+public class NumNumDrivetrain extends PedrioSubsystem {
 
     private final Hardware robot = Hardware.getInstance();
     public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
