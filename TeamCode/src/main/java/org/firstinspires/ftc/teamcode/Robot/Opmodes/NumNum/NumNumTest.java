@@ -31,7 +31,12 @@ public class NumNumTest extends OpMode {
         if (gamepad1.a){
             this.robot.imu.resetYaw();
         }
-        currentPose = this.robot.localizer.getPose();
+        //currentPose = this.robot.localizer.getPose();
+        telemetry.addData("Left", this.robot.LeftEncoder.getCurrentPosition());
+        telemetry.addData("Middle",this.robot.MiddleEncoder.getCurrentPosition());
+        telemetry.addData("Right", this.robot.RightEncoder.getCurrentPosition());
+
+        telemetry.update();
 
 
     }
