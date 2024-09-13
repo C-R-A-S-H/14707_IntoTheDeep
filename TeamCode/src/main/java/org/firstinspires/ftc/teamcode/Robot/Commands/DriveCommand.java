@@ -6,13 +6,13 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
 
 import java.util.function.DoubleSupplier;
 
-public class Drivetrain extends CommandBase {
+public class DriveCommand extends CommandBase {
     private NumNumDrivetrain Subsystem;
     private DoubleSupplier xval;
     private DoubleSupplier yval;
     private DoubleSupplier zval;
 
-    public Drivetrain(NumNumDrivetrain subsystem, DoubleSupplier xval, DoubleSupplier yval, DoubleSupplier zval){
+    public DriveCommand(NumNumDrivetrain subsystem, DoubleSupplier xval, DoubleSupplier yval, DoubleSupplier zval){
         this.xval = xval;
         this.yval = yval;
         this.zval = zval;
