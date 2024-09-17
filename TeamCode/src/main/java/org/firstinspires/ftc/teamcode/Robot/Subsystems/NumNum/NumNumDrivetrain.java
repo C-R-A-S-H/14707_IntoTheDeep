@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.Robot.Hardware;
 public class NumNumDrivetrain extends PedrioSubsystem {
 
     private final Hardware robot = Hardware.getInstance();
-    public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
+    protected MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
     private double LENGTH = 14;
     private double WIDTH = 14;
     static final double TRACKWIDTH = 16;
