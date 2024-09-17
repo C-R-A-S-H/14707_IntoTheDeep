@@ -1,8 +1,14 @@
-package org.firstinspires.ftc.teamcode.Pedrio;
+package org.firstinspires.ftc.teamcode.Pedrio.BrainRot;
 
 public class SkibidiClass {
 
-    final private int alphaness = 100 ;
+    private int alphaness = 100;
+
+
+    public SkibidiClass(int alphaness){
+        this.alphaness = alphaness;
+    }
+
 
     public double checkForSkibidiness(double aura_level, double sigmaness){
         // add aura and sigmaness and square it and then divide it by our alphaness
