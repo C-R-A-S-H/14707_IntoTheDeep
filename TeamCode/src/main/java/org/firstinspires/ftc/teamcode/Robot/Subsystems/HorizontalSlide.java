@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 
-public class LinearSlide {
+public class HorizontalSlide {
     private final Hardware robot = Hardware.getInstance();
 
 }
