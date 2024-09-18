@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -20,15 +21,15 @@ public class Hardware {
     public MotorEx BlMotor;
     public MotorEx BrMotor;
 
+    public MotorEx HsSlide;
+
     public MotorEx LeftEncoder;
     public MotorEx RightEncoder;
     public MotorEx MiddleEncoder;
 
-    public ThreeWheelIMULocalizer localizer;
-
     public IMU imu;
     public HardwareMap hmap;
-    //public SparkFunOTOS otos;
+    public SparkFunOTOS otos;
 
     //public AprilTagProcessor aprilTag;
     //public VisionPortal visionPortal;
@@ -48,6 +49,7 @@ public class Hardware {
         this.FrMotor = new MotorEx(hmap,"FrontRight");
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
+        this.HsSlide = new MotorEx(hmap, "HsSlide");
 
 
 
@@ -77,12 +79,11 @@ public class Hardware {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
 
-        this.localizer = new ThreeWheelIMULocalizer(hmap);
+
 
     }
     public void Loop(){
         this.drivetrain.periodic();
-        this.localizer.update();
     }
 
 

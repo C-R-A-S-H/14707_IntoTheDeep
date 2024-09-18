@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode.Robot.Subsystems;
+package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -25,7 +25,7 @@ public class Drivetrain extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
     public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
     public final SparkFunOTOS myOtos = robot.otos;
-    private CameraLocalization cameraLocalization = new CameraLocalization();
+    //private CameraLocalization cameraLocalization = new CameraLocalization();
     private RegularFusing dataFuser = new RegularFusing();
     private double LENGTH = 14;
     private double WIDTH = 14;
@@ -39,8 +39,8 @@ public class Drivetrain extends PedrioSubsystem {
 
 
     public Pose2d getFusedPose(){
-
-        Pose2d apriltagpose;
+        //TODO add limelight localization to fuse
+        /*Pose2d apriltagpose;
         Pose2d cameraPose;
         ArrayList<Pose2d> aprilTagPoses = new ArrayList<>();
         int i = 0;
@@ -64,14 +64,16 @@ public class Drivetrain extends PedrioSubsystem {
             cameraPose = new Pose2d(x / i, y / i, new Rotation2d(0));
             aprilTagPoses.clear();
         }
+
+         */
         Pose2d otosPose = new Pose2d(
                 myOtos.getPosition().x,
                 myOtos.getPosition().y,
                 new Rotation2d(myOtos.getPosition().h)
         );
-        if(cameraPose != null) {
-            return dataFuser.fuse(otosPose, cameraPose, new Rotation2d(getRawIMUHeadingDegrees()));
-        }
+        //if(cameraPose != null) {
+          //  return dataFuser.fuse(otosPose, cameraPose, new Rotation2d(getRawIMUHeadingDegrees()));
+        //}
         return otosPose;
     }
 
@@ -185,4 +187,3 @@ public class Drivetrain extends PedrioSubsystem {
     }
 }
 
- */
