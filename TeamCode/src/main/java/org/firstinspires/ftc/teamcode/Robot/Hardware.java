@@ -25,8 +25,6 @@ public class Hardware {
     public MotorEx RightEncoder;
     public MotorEx MiddleEncoder;
 
-    public ThreeWheelIMULocalizer localizer;
-
     public IMU imu;
     public HardwareMap hmap;
     public SparkFunOTOS otos;
@@ -78,12 +76,11 @@ public class Hardware {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
 
-        this.localizer = new ThreeWheelIMULocalizer(hmap);
+
 
     }
     public void Loop(){
         this.drivetrain.periodic();
-        this.localizer.update();
     }
 
 
