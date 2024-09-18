@@ -7,8 +7,7 @@ public class HorizontalSlide {
 
     public double SetPower(double WantedPower) {
 
-        WantedPower = 0.5;
+        robot.HsSlide.set(WantedPower);
 
-        return  WantedPower;
     }
 }
