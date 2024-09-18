@@ -87,16 +87,16 @@ public class SensorLimelight3A extends LinearOpMode {
         limelight.start();
 
         telemetry.addData(">", "Robot Ready.  Press Play.");
-        telemetry.update( %.1fC, CPU: %.1f%%, FPS: %d",
-        status.getTemp(), status.getCpu(),(int)status.getFps());
-        telemetry.addData("Pipeline",);
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
             LLStatus status = limelight.getStatus();
             telemetry.addData("Name", "%s",
                     status.getName());
-            telemetry.addData("LL", "Temp:"Index: %d, Type: %s",
+            telemetry.addData("LL", "Temp: %.1fC, CPU: %.1f%%, FPS: %d",
+                    status.getTemp(), status.getCpu(),(int)status.getFps());
+            telemetry.addData("Pipeline", "Index: %d, Type: %s",
                     status.getPipelineIndex(), status.getPipelineType());
 
             LLResult result = limelight.getLatestResult();
