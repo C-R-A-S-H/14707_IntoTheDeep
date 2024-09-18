@@ -49,6 +49,7 @@ public class Hardware {
         this.FrMotor = new MotorEx(hmap,"FrontRight");
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
+        this.HsSlide = new MotorEx(hmap, "HsSlide");
 
 
 
