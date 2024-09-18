@@ -21,6 +21,8 @@ public class Hardware {
     public MotorEx BlMotor;
     public MotorEx BrMotor;
 
+    public MotorEx HsSlide;
+
     public MotorEx LeftEncoder;
     public MotorEx RightEncoder;
     public MotorEx MiddleEncoder;
