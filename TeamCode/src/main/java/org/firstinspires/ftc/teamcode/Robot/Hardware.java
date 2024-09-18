@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -28,7 +29,7 @@ public class Hardware {
 
     public IMU imu;
     public HardwareMap hmap;
-    //public SparkFunOTOS otos;
+    public SparkFunOTOS otos;
 
     //public AprilTagProcessor aprilTag;
     //public VisionPortal visionPortal;

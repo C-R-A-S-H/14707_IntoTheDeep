@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode.Pedrio.PointToPoint;
+package org.firstinspires.ftc.teamcode.Pedrio.PointToPoint;
 
 import static java.lang.Thread.sleep;
 
@@ -67,5 +67,3 @@ public class Trajectory {
     }
 
 }
-
- */

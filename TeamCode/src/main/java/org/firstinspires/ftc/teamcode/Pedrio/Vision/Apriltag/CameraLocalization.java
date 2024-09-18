@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag;
+package org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag;
 
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
@@ -25,5 +25,3 @@ public class CameraLocalization {
 
     }
 }
-
- */
