@@ -1,10 +1,10 @@
 package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
-import org.firstinspires.ftc.teamcode.Pedrio.BrainRot.PIDControllers;
+import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 
-public class HorizontalSlide {
+public class HorizontalSlide extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
 
     public void SetPower(double WantedPower) {
@@ -15,5 +15,15 @@ public class HorizontalSlide {
     public void setPosValue(double WantedPos) {
         double Value = Config.HorizontalController.calculate(WantedPos, robot.HsSlide.getCurrentPosition());
         robot.HsSlide.set(Value);
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void periodic() {
+
     }
 }
