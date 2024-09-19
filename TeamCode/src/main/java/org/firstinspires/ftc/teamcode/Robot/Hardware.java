@@ -23,6 +23,7 @@ public class Hardware {
     public MotorEx BrMotor;
 
     public MotorEx HsSlide;
+    public MotorEx VsSlide;
 
     public Limelight3A limelight3A;
 
@@ -50,6 +51,7 @@ public class Hardware {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
+        this.VsSlide = new MotorEx(hmap, "VsSlide");
 
         this.limelight3A = hmap.get(Limelight3A.class,"LL");
 
