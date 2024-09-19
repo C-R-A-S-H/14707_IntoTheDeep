@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
-import org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers.ThreeWheelIMULocalizer;
 
 
 public class Hardware {
@@ -23,7 +22,13 @@ public class Hardware {
     public MotorEx BrMotor;
 
     public MotorEx HsSlide;
-    public MotorEx VsSlide;
+    public MotorEx AVSlide;
+    public MotorEx BVSlide;
+
+    public CRServo Intake1;
+    public CRServo Intake2;
+
+    public Servo DropDown;
 
     public Limelight3A limelight3A;
 
@@ -51,7 +56,12 @@ public class Hardware {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
-        this.VsSlide = new MotorEx(hmap, "VsSlide");
+        this.AVSlide = new MotorEx(hmap, "VsSlide");
+
+        this.Intake1 = hmap.get(CRServo.class,"Intake1");
+        this.Intake2 = hmap.get(CRServo.class,"Intake2");
+
+        this.DropDown = hmap.get(Servo.class, "DropDown");
 
         this.limelight3A = hmap.get(Limelight3A.class,"LL");
 
