@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -22,6 +23,8 @@ public class Hardware {
     public MotorEx BrMotor;
 
     public MotorEx HsSlide;
+
+    public Limelight3A limelight3A;
 
 
     public IMU imu;
@@ -47,6 +50,8 @@ public class Hardware {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
+
+        this.limelight3A = hmap.get(Limelight3A.class,"LL");
 
         this.drivetrain = new NumNumDrivetrain();
 
