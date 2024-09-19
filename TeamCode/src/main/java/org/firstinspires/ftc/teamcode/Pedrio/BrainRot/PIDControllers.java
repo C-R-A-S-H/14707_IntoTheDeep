@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 
 public class PIDControllers {
     //making variables
-    private PIDController pidController;
+    private PIDController pidController = new PIDController(0.001,0,0);
 
     //pid controllers are useful for position and velocity holding
     //we use them to control most subsystems so it's important to have a solid understanding of pid controller
