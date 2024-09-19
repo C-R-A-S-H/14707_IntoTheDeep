@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Pedrio.DataFusing.RegularFusing;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag.ApriltagPose;
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag.CameraLocalization;
+import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
@@ -27,16 +28,12 @@ public class Drivetrain extends PedrioSubsystem {
     public final SparkFunOTOS myOtos = robot.otos;
     //private CameraLocalization cameraLocalization = new CameraLocalization();
     private RegularFusing dataFuser = new RegularFusing();
-    private double LENGTH = 14;
-    private double WIDTH = 14;
-
-
 
     private final MecanumDriveKinematics kine = new MecanumDriveKinematics(
-            new Translation2d(LENGTH / 2, WIDTH / 2),
-            new Translation2d(LENGTH / 2, -WIDTH / 2),
-            new Translation2d(-LENGTH / 2, WIDTH / 2),
-            new Translation2d(-LENGTH / 2, -WIDTH / 2)
+            new Translation2d(Config.LENGTH / 2, Config.WIDTH / 2),
+            new Translation2d(Config.LENGTH / 2, -Config.WIDTH / 2),
+            new Translation2d(-Config.LENGTH / 2, Config.WIDTH / 2),
+            new Translation2d(-Config.LENGTH / 2, -Config.WIDTH / 2)
     );
 
 

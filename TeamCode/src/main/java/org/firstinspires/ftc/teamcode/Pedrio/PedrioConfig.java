@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.geometry.Rotation2d;
 
 import java.util.ArrayList;
 
-public class Config {
+public class PedrioConfig {
     //point to point
     public static double toleranceMin = 0.05;
     public static double toleranceMax = 0.05;

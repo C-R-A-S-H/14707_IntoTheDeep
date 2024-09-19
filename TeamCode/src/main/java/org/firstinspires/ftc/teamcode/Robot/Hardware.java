@@ -48,11 +48,7 @@ public class Hardware {
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
 
-
-
         this.drivetrain = new NumNumDrivetrain();
-
-        double TICKS_TO_INCHES = 15.3;
 
         this.drivetrain.init();
         //this.otos = hmap.get(SparkFunOTOS.class, "otos");
@@ -61,20 +57,15 @@ public class Hardware {
         //aprilTag = AprilTagProcessor.easyCreateWithDefaults();
         //visionPortal = VisionPortal.easyCreateWithDefaults(
                 //hmap.get(WebcamName.class, "Webcam 1"), aprilTag);
-
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
 
-
-
     }
     public void Loop(){
         this.drivetrain.periodic();
     }
-
-
 
 }
