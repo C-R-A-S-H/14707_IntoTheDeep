@@ -32,6 +32,10 @@ public class Hardware {
     public HardwareMap hmap;
     public SparkFunOTOS otos;
 
+    public CRServo Intake1;
+    public CRServo Intake2;
+    public Servo DropDown;
+
     //public AprilTagProcessor aprilTag;
     //public VisionPortal visionPortal;
 
@@ -52,6 +56,9 @@ public class Hardware {
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
         this.VsSlide = new MotorEx(hmap, "VsSlide");
+        this.Intake1 = hmap.get(CRServo.class, "Intake1");
+        this.Intake2 = hmap.get(CRServo.class, "Intake2");
+        this.DropDown = hmap.get(Servo.class, "DropDown");
 
         this.limelight3A = hmap.get(Limelight3A.class,"LL");
 
