@@ -23,9 +23,6 @@ public class Hardware {
 
     public MotorEx HsSlide;
 
-    public MotorEx LeftEncoder;
-    public MotorEx RightEncoder;
-    public MotorEx MiddleEncoder;
 
     public IMU imu;
     public HardwareMap hmap;
@@ -56,14 +53,6 @@ public class Hardware {
         this.drivetrain = new NumNumDrivetrain();
 
         double TICKS_TO_INCHES = 15.3;
-
-        this.LeftEncoder = new MotorEx(hmap, "leftEncoder");
-        this.MiddleEncoder = new MotorEx(hmap, "middleEncoder");
-        this.RightEncoder = new MotorEx(hmap, "rightEncoder");
-
-        this.LeftEncoder.setDistancePerPulse(TICKS_TO_INCHES);
-        this.MiddleEncoder.setDistancePerPulse(TICKS_TO_INCHES);
-        this.RightEncoder.setDistancePerPulse(TICKS_TO_INCHES);
 
         this.drivetrain.init();
         //this.otos = hmap.get(SparkFunOTOS.class, "otos");
