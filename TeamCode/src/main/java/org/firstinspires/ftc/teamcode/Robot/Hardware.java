@@ -4,8 +4,10 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
 
@@ -22,6 +24,11 @@ public class Hardware {
     public MotorEx HsSlide;
     public MotorEx AVSlide;
     public MotorEx BVSlide;
+
+    public CRServo Intake1;
+    public CRServo Intake2;
+
+    public Servo DropDown;
 
     public Limelight3A limelight3A;
 
@@ -49,8 +56,12 @@ public class Hardware {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
         this.HsSlide = new MotorEx(hmap, "HsSlide");
-        this.AVSlide = new MotorEx(hmap, "AVSlide");
-        this.BVSlide = new MotorEx(hmap, "BVSlide");
+        this.AVSlide = new MotorEx(hmap, "VsSlide");
+
+        this.Intake1 = hmap.get(CRServo.class,"Intake1");
+        this.Intake2 = hmap.get(CRServo.class,"Intake2");
+
+        this.DropDown = hmap.get(Servo.class, "DropDown");
 
         this.limelight3A = hmap.get(Limelight3A.class,"LL");
 

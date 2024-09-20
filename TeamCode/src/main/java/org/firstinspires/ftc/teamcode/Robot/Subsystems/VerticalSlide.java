@@ -13,7 +13,7 @@ public class VerticalSlide extends PedrioSubsystem {
     }
 
     public void setPosValue(double WantedPos) {
-        double PositionAverage = (robot.AVSlide.getCurrentPosition() + robot.BVSlide.getCurrentPosition())/2;
+        double PositionAverage = (double) (robot.AVSlide.getCurrentPosition() + robot.BVSlide.getCurrentPosition()) / 2;
         double Value = Config.VerticalController.calculate(WantedPos, PositionAverage);
 
         SetPower(Value);

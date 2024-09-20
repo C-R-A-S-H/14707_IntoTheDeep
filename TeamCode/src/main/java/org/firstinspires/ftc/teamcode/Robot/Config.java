@@ -8,7 +8,7 @@ public class Config {
     public static final double WIDTH = 14.358;
     public static PIDController HorizontalController = new PIDController(0.001, 0, 0);
     public static PIDController VerticalController = new PIDController(0.001, 0, 0);
-
+    public static PIDController DropDownController = new PIDController(0.001, 0, 0);
 
 
 
