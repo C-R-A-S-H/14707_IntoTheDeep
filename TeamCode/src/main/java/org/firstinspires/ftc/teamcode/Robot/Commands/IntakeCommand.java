@@ -13,9 +13,5 @@ public class IntakeCommand extends CommandBase {
         this.power = power;
         addRequirements(this.subsystem);
     }
-    public void DropDownCommand(Intake subsystem, double power){
-        this.DropDown = subsystem;
-        this.power = power;
-        addRequirements(this.DropDown);
-    }
+
 }
