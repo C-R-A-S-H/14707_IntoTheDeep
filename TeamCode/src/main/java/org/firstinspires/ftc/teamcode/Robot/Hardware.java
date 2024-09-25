@@ -9,7 +9,16 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
+import org.firstinspires.ftc.teamcode.Pedrio.Sensors.BeamBreak;
+import org.firstinspires.ftc.teamcode.Pedrio.Sensors.MagLimitSwitch;
+import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drivetrain;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Hardware {
@@ -32,13 +41,18 @@ public class Hardware {
 
     public Limelight3A limelight3A;
 
+    public BeamBreak intakeBeamBreak;
+    public MagLimitSwitch horizontalLimitSwitch;
 
     public IMU imu;
     public HardwareMap hmap;
     public SparkFunOTOS otos;
 
-    public NumNumDrivetrain drivetrain;
+    public Drivetrain drivetrain;
+    public Intake intake;
+    public LimeLightHelper ll;
 
+    private List<PedrioSubsystem> subsystems = new ArrayList<>();
     public static Hardware getInstance(){
         if(instance == null){
             instance = new Hardware();
@@ -62,9 +76,16 @@ public class Hardware {
 
         this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
-        this.drivetrain = new NumNumDrivetrain();
+        this.intakeBeamBreak = new BeamBreak(hmap,"intakeBeamBreak");
+        this.horizontalLimitSwitch = new MagLimitSwitch(hmap,"horizontalLimitLimitSwitch");
 
-        this.drivetrain.init();
+        this.drivetrain = new Drivetrain();
+
+
+
+        this.subsystems.add(this.drivetrain);
+        this.subsystems.add(this.intake);
+
         //this.otos = hmap.get(SparkFunOTOS.class, "otos");
         this.imu = hmap.get(IMU.class, "imu");
 
@@ -74,9 +95,15 @@ public class Hardware {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
 
+        for(PedrioSubsystem Subsystem : subsystems){
+            Subsystem.init();
+        }
+
     }
     public void Loop(){
-        this.drivetrain.periodic();
+        for(PedrioSubsystem Subsystem : subsystems){
+            Subsystem.init();
+        }
     }
 
 }
