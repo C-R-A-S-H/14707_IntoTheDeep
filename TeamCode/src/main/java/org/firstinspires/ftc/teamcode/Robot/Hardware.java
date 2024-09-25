@@ -37,9 +37,6 @@ public class Hardware {
     public HardwareMap hmap;
     public SparkFunOTOS otos;
 
-    //public AprilTagProcessor aprilTag;
-    //public VisionPortal visionPortal;
-
     public NumNumDrivetrain drivetrain;
 
     public static Hardware getInstance(){
@@ -63,7 +60,7 @@ public class Hardware {
 
         this.DropDown = hmap.get(Servo.class, "DropDown");
 
-        this.limelight3A = hmap.get(Limelight3A.class,"LL");
+        this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
         this.drivetrain = new NumNumDrivetrain();
 
@@ -71,9 +68,6 @@ public class Hardware {
         //this.otos = hmap.get(SparkFunOTOS.class, "otos");
         this.imu = hmap.get(IMU.class, "imu");
 
-        //aprilTag = AprilTagProcessor.easyCreateWithDefaults();
-        //visionPortal = VisionPortal.easyCreateWithDefaults(
-                //hmap.get(WebcamName.class, "Webcam 1"), aprilTag);
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
