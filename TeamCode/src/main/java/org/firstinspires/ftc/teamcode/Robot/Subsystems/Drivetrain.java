@@ -12,8 +12,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Pedrio.DataFusing.RegularFusing;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
-import org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag.ApriltagPose;
-import org.firstinspires.ftc.teamcode.Pedrio.Vision.Apriltag.CameraLocalization;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
