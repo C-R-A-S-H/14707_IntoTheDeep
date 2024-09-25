@@ -3,16 +3,17 @@ package org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
+import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 public class HalfExtendCommand extends CommandBase {
     private Intake intake;
     private LimeLightHelper ll;
-    private double ea;
-    public HalfExtendCommand(Intake intake, LimeLightHelper ll, double ExtensionAmount){
+
+    public HalfExtendCommand(Intake intake, LimeLightHelper ll){
         this.intake = intake;
         this.ll = ll;
-        this.ea = ExtensionAmount;
+
         addRequirements(this.intake,this.ll);
     }
     @Override
@@ -22,12 +23,12 @@ public class HalfExtendCommand extends CommandBase {
 
     @Override
     public void execute() {
-        this.intake.SetSlidePos(this.ea);
+        this.intake.SetSlidePos(Config.HalfExtendedSlideEncPos);
         this.intake.IntakeUp();
     }
 
     @Override
     public boolean isFinished() {
-        return super.isFinished();
+        return this.intake.tolerance(this.intake.HorizontalEncTicks * Config.HorizontalSlideTicksToInches, Config.HalfExtendedSlideEncPos - 0.5,Config.HalfExtendedSlideEncPos + 0.5);
     }
 }
