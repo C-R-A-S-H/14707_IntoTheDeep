@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode.Pedrio.Vision;
 
 
-import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import android.support.v4.os.IResultReceiver;
+
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
-
-import java.util.Collection;
-import java.util.List;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 
 
 public class LimeLightHelper extends PedrioSubsystem {
@@ -28,19 +29,6 @@ public class LimeLightHelper extends PedrioSubsystem {
 
 
     }
-    public List<LLResultTypes.FiducialResult> GetIDResults() {
-        return robot.limelight3A.getLatestResult().getFiducialResults();
-    }
-
-    public Collection<LLResultTypes.BarcodeResult> GetBarResults() {
-        return robot.limelight3A.getLatestResult().getBarcodeResults();
-    }
-    
-    public Collection<LLResultTypes.ClassifierResult> GetClassifierResults(){
-        return robot.limelight3A.getLatestResult().getClassifierResults();
-    }
-
-
 
 
     @Override
