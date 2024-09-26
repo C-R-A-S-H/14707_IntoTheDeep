@@ -33,7 +33,8 @@ public class Hardware {
 
     public Limelight3A limelight3A;
 
-    public AnalogInput BeamBreak;
+    public AnalogInput BeamBreak1;
+    public AnalogInput BeamBreak2;
 
     public IMU imu;
     public HardwareMap hmap;
@@ -67,7 +68,8 @@ public class Hardware {
 
         this.limelight3A = hmap.get(Limelight3A.class,"LL");
 
-        this.BeamBreak = hmap.get(AnalogInput.class, "BeamBreak");
+        this.BeamBreak1 = hmap.get(AnalogInput.class, "BeamBreak1");
+        this.BeamBreak2 = hmap.get(AnalogInput.class, "BeamBreak2");
 
         this.drivetrain = new NumNumDrivetrain();
 
