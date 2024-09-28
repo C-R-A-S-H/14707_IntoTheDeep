@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Pedrio.Sensors.BeamBreak;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 public class IntakeActivationCommand extends CommandBase {
@@ -17,6 +18,7 @@ public class IntakeActivationCommand extends CommandBase {
     @Override
     public void initialize() {
         this.intake.SetPower(0.6);
+        this.intake.intakeState = IntakeState.INTAKING;
     }
 
     @Override

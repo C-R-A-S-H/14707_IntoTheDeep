@@ -10,10 +10,14 @@ public class Config {
     public static PIDController HorizontalController = new PIDController(0.001, 0, 0);
     public static PIDController VerticalController = new PIDController(0.001, 0, 0);
     //public static PIDController DropDownController = new PIDController(0.001, 0, 0);
-    public static double DropDownPose = -1;
-    public static double IntakeUpPose = 0;
 
-    public static double SlideFF = 0.1;
+    public static double DropDownPoseLeft = 0.1;
+    public static double DropDownPoseRight = -0.1;
+    public static double IntakeUpPoseLeft = 0;
+    public static double IntakeUpPoseRight = 0;
+
+    public static double HorizontalSlideFF = 0.1;
+    public static double VerticalSlideFF = 0.1;
 
     public static double FullyExtendedSlideEncPos = 200;
     public static double HalfExtendedSlideEncPos = 100;
@@ -30,6 +34,8 @@ public class Config {
 
     public static double BeamBroken = 1;
     public static double BeamNotBroken = 0;
+
+    public static boolean AutoScoring = false;
 
 
 

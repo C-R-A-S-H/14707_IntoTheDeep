@@ -14,6 +14,7 @@ import org.firstinspires.ftc.teamcode.Pedrio.DataFusing.RegularFusing;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class Drivetrain extends PedrioSubsystem {
 
     private final Hardware robot = Hardware.getInstance();
     public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
+
     public final SparkFunOTOS myOtos = robot.otos;
     //private CameraLocalization cameraLocalization = new CameraLocalization();
     private RegularFusing dataFuser = new RegularFusing();
@@ -34,6 +36,7 @@ public class Drivetrain extends PedrioSubsystem {
             new Translation2d(-Config.LENGTH / 2, -Config.WIDTH / 2)
     );
 
+    public Follower follower = this.robot.follower;
 
     public Pose2d getFusedPose(){
         //TODO add limelight localization to fuse
@@ -100,7 +103,7 @@ public class Drivetrain extends PedrioSubsystem {
 
     @Override
     public void init() {
-
+        this.follower = this.robot.follower;
     }
 
     @Override

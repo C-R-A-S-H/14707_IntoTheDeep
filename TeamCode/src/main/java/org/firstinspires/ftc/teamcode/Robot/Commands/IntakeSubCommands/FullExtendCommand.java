@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
 import org.firstinspires.ftc.teamcode.Robot.Config;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 import java.util.ArrayList;
@@ -26,7 +27,14 @@ public class FullExtendCommand extends CommandBase {
     @Override
     public void execute() {
         double ea = ll.getDistanceFromSample(ll.getColorData().get(0));
+        this.intake.intakeState = IntakeState.EXTENDED;
         this.intake.SetSlidePos(ea + Config.ExtensionCount);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        this.intake.intakeState = IntakeState.EXTENDED;
+        super.end(interrupted);
     }
 
     @Override
