@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
 import org.firstinspires.ftc.teamcode.Robot.Config;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 public class HalfExtendCommand extends CommandBase {
@@ -25,6 +26,7 @@ public class HalfExtendCommand extends CommandBase {
     public void execute() {
         this.intake.SetSlidePos(Config.HalfExtendedSlideEncPos);
         this.intake.IntakeUp();
+        this.intake.intakeState = IntakeState.EXTENDING;
     }
 
     @Override

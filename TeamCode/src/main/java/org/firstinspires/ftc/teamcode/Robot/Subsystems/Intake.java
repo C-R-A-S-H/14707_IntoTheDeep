@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
-import org.firstinspires.ftc.teamcode.Pedrio.BrainRot.PIDControllers;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
 
 public class Intake extends PedrioSubsystem {
@@ -11,8 +10,7 @@ public class Intake extends PedrioSubsystem {
     public IntakeState intakeState = IntakeState.DISABLED;
     public double HorizontalEncTicks = this.robot.HsSlide.getCurrentPosition();
     public void SetPower(double WantedPower) {
-        robot.Intake1.setPower(WantedPower);
-        robot.Intake2.setPower(WantedPower);
+        robot.IntakeMotor.set(WantedPower);
     }
 
     public void setSlidePower(double power){
@@ -20,17 +18,19 @@ public class Intake extends PedrioSubsystem {
     }
 
     public void DropDown() {
-        robot.DropDown.setPosition(Config.DropDownPose);
+        robot.DropDownLeft.setPosition(Config.DropDownPoseLeft);
+        robot.DropDownRight.setPosition(Config.DropDownPoseRight);
         this.intakeState = IntakeState.EXTENDING;
     }
     public void IntakeUp(){
-        robot.DropDown.setPosition(Config.IntakeUpPose);
+        robot.DropDownLeft.setPosition(Config.IntakeUpPoseLeft);
+        robot.DropDownRight.setPosition(Config.IntakeUpPoseRight);
         this.intakeState = IntakeState.RETRACTING;
     }
 
     public void SetSlidePos(double WantedPos) {
         double Value = Config.HorizontalController.calculate(WantedPos, HorizontalEncTicks * Config.HorizontalSlideTicksToInches);
-        double FF = Config.SlideFF;
+        double FF = Config.HorizontalSlideFF;
         if (this.intakeState == IntakeState.RETRACTING){
             FF  = -FF;
         }

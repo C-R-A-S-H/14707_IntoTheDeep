@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.Pedrio.Sensors.MagLimitSwitch;
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Drivetrain;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +34,15 @@ public class Hardware {
     public MotorEx AVSlide;
     public MotorEx BVSlide;
 
-    public CRServo Intake1;
-    public CRServo Intake2;
+    public MotorEx IntakeMotor;
 
-    public Servo DropDown;
+    public Servo DropDownLeft;
+    public Servo DropDownRight;
+
+    public Servo DepositPivot1Left;
+    public Servo DepositPivot1Right;
+    public Servo DepositPivot2;//on the right
+    public Servo DepositClaw;
 
     public Limelight3A limelight3A;
 
@@ -51,6 +56,8 @@ public class Hardware {
     public Drivetrain drivetrain;
     public Intake intake;
     public LimeLightHelper ll;
+
+    public Follower follower;
 
     private List<PedrioSubsystem> subsystems = new ArrayList<>();
     public static Hardware getInstance(){
@@ -69,10 +76,15 @@ public class Hardware {
         this.HsSlide = new MotorEx(hmap, "HsSlide");
         this.AVSlide = new MotorEx(hmap, "VsSlide");
 
-        this.Intake1 = hmap.get(CRServo.class,"Intake1");
-        this.Intake2 = hmap.get(CRServo.class,"Intake2");
+        this.DepositClaw = hmap.get(Servo.class,"DepositClaw");
+        this.DepositPivot1Left = hmap.get(Servo.class,"DepositPivot1Left");
+        this.DepositPivot1Right = hmap.get(Servo.class,"DepositPivot1Right");
+        this.DepositPivot2 = hmap.get(Servo.class,"DepositPivot2");
 
-        this.DropDown = hmap.get(Servo.class, "DropDown");
+        this.IntakeMotor = new MotorEx(hmap,"IntakeMotor");
+
+        this.DropDownLeft = hmap.get(Servo.class, "DropDownLeft");
+        this.DropDownRight = hmap.get(Servo.class,"DropDownRight");
 
         this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
@@ -81,7 +93,7 @@ public class Hardware {
 
         this.drivetrain = new Drivetrain();
 
-
+        this.follower = new Follower(hmap);
 
         this.subsystems.add(this.drivetrain);
         this.subsystems.add(this.intake);
