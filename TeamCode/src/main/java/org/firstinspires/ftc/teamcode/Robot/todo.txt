@@ -1,0 +1,10 @@
+// = done / = needs tested
+/add follow path command
+update the intake command
+finish the deposit subsystem
+make deposit commands for basket
+make deposit commands for speciment
+make test auto test on numnum
+make test auto teleop and test on numnum
+combine subsytem commands and auto teleop on murphy
+test everything on the robot
