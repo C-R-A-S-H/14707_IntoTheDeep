@@ -27,12 +27,12 @@ public class NumNumTest extends OpMode {
     static final double CENTER_WHEEL_OFFSET = 2.4;
     private Pose currentPose;
 
-    public Motor FlMotor;
-    public Motor FrMotor;
-    public Motor BlMotor;
-    public Motor BrMotor;
+    private Motor FlMotor;
+    private Motor FrMotor;
+    private Motor BlMotor;
+    private Motor BrMotor;
 
-    MecanumDrive drive;
+    private MecanumDrive drive;
 
     private PIDController x_pid = new PIDController(1,0,0);
     private PIDController y_pid = new PIDController(1,0,0);
@@ -42,9 +42,11 @@ public class NumNumTest extends OpMode {
 
     public Limelight3A limelight;
 
-    public LimeLightHelper helper;
-    public NumNumDrivetrain dt = new NumNumDrivetrain();
+    private LimeLightHelper helper;
+    private NumNumDrivetrain dt = new NumNumDrivetrain();
 
+    int wantedId = 2;
+    double yaw = 0;
 
 
 
@@ -69,23 +71,29 @@ public class NumNumTest extends OpMode {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         this.imu.initialize(parameters);
        telemetry.setMsTransmissionInterval(11);
-        this.limelight.pipelineSwitch(0);
+        this.limelight.pipelineSwitch(4);
         //\
         this.limelight.start();
 
-        drive = new MecanumDrive(FlMotor, FrMotor, BlMotor, BrMotor);
+        this.drive = new MecanumDrive(FlMotor, FrMotor, BlMotor, BrMotor);
 
 
     }
 
     @Override
     public void loop() {
+
         LLResult data = this.limelight.getLatestResult();
         if(data != null) {
            if(data.isValid()) {
-              List<LLResultTypes.FiducialResult> results = data.getFiducialResults();
-                drive.driveRobotCentric(0,0,turn_pid.calculate(14, results.get(0).getCameraPoseTargetSpace().getOrientation().getYaw()));
-                telemetry.addData("target stuff: ",results.get(0).getCameraPoseTargetSpace());
+              List<LLResultTypes.DetectorResult> results = data.getDetectorResults();
+
+              for(LLResultTypes.DetectorResult sample: results){
+                  if(sample.getClassId() == wantedId){
+                      yaw = sample.getTargetXDegrees();
+                  }
+              }
+               telemetry.addData("Closest Red Sample", yaw);
             }else{
                telemetry.addData("Data isnt valid",""  );
            }
@@ -93,6 +101,7 @@ public class NumNumTest extends OpMode {
             telemetry.addData("Data Null ", "");
         }
 
+        drive.driveRobotCentric(gamepad1.left_stick_x,gamepad1.left_stick_y,turn_pid.calculate(0,yaw));
         telemetry.update();
     }
 }
