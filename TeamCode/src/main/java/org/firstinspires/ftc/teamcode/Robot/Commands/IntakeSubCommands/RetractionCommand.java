@@ -15,12 +15,16 @@ public class RetractionCommand extends CommandBase {
     }
     @Override
     public void initialize() {
-        super.initialize();
+        this.intake.IntakeUp();
     }
 
     @Override
     public void execute() {
-        this.intake.setSlidePower(-0.6);
+        if(this.intake.HorizontalEncTicks < 300){
+            this.intake.setSlidePower(-0.3);
+        }else{
+            this.intake.setSlidePower(-1);
+        }
         this.intake.intakeState = IntakeState.RETRACTING;
     }
 
@@ -28,7 +32,6 @@ public class RetractionCommand extends CommandBase {
     public void end(boolean interrupted) {
         this.intake.setSlidePower(0);
         this.intake.resetEncoders();
-
     }
 
     @Override

@@ -9,13 +9,11 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 public class HalfExtendCommand extends CommandBase {
     private Intake intake;
-    private LimeLightHelper ll;
 
-    public HalfExtendCommand(Intake intake, LimeLightHelper ll){
+    public HalfExtendCommand(Intake intake){
         this.intake = intake;
-        this.ll = ll;
 
-        addRequirements(this.intake,this.ll);
+        addRequirements(this.intake);
     }
     @Override
     public void initialize() {

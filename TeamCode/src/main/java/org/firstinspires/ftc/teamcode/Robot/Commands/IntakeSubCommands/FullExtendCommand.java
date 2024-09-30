@@ -26,9 +26,9 @@ public class FullExtendCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double ea = ll.getDistanceFromSample(ll.getColorData().get(0));
-        this.intake.intakeState = IntakeState.EXTENDED;
-        this.intake.SetSlidePos(ea + Config.ExtensionCount);
+        ea = ll.getDistanceFromSample(ll.getColorData().get(0));
+        this.intake.intakeState = IntakeState.EXTENDING;
+        this.intake.ExtendLimelight(ea);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class FullExtendCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(this.intake.HorizontalEncTicks * Config.HorizontalSlideTicksToInches, ea - 0.5,ea + 0.5);
+        return this.intake.tolerance(this.intake.HorizontalEncTicks, ea - 0.5,ea + 0.5);
     }
 }

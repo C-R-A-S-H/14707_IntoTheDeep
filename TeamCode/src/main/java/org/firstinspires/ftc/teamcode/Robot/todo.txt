@@ -1,6 +1,6 @@
 // = done / = needs tested
 /add follow path command
-update the intake command
+/update the intake command
 finish the deposit subsystem
 make deposit commands for basket
 make deposit commands for speciment

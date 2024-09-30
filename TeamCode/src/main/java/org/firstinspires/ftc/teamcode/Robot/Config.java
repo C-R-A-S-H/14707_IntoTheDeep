@@ -37,6 +37,10 @@ public class Config {
 
     public static boolean AutoScoring = false;
 
+    public static double TolerantDistanceFromSample = 2;
+
+    public static boolean isAuto = true;
+
 
 
 }

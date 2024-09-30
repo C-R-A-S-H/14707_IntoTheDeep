@@ -8,16 +8,16 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
 public class IntakeActivationCommand extends CommandBase {
     private Intake intake;
-    private BeamBreak bb;
-    public IntakeActivationCommand(Intake intake, BeamBreak bb){
+    private BeamBreak TransferBeamBreak;
+    public IntakeActivationCommand(Intake intake, BeamBreak TransferBeamBreak){
         this.intake = intake;
-        this.bb = bb;
+        this.TransferBeamBreak = TransferBeamBreak;
         addRequirements(this.intake);
     }
 
     @Override
     public void initialize() {
-        this.intake.SetPower(0.6);
+        this.intake.SetPower(100);
         this.intake.intakeState = IntakeState.INTAKING;
     }
 
@@ -33,6 +33,6 @@ public class IntakeActivationCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return this.bb.getTriggered();
+        return this.TransferBeamBreak.getTriggered();
     }
 }

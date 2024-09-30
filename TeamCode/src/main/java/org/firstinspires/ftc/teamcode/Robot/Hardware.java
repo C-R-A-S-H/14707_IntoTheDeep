@@ -47,7 +47,9 @@ public class Hardware {
     public Limelight3A limelight3A;
 
     public BeamBreak intakeBeamBreak;
+    public BeamBreak transferBeamBreak;
     public MagLimitSwitch horizontalLimitSwitch;
+    public MagLimitSwitch verticalLimitSwitch;
 
     public IMU imu;
     public HardwareMap hmap;
@@ -89,7 +91,9 @@ public class Hardware {
         this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
         this.intakeBeamBreak = new BeamBreak(hmap,"intakeBeamBreak");
+        this.transferBeamBreak = new BeamBreak(hmap,"transferBeamBreak");
         this.horizontalLimitSwitch = new MagLimitSwitch(hmap,"horizontalLimitLimitSwitch");
+        this.verticalLimitSwitch = new MagLimitSwitch(hmap,"verticalLimitSwitch");
 
         this.drivetrain = new Drivetrain();
 
@@ -114,7 +118,7 @@ public class Hardware {
     }
     public void Loop(){
         for(PedrioSubsystem Subsystem : subsystems){
-            Subsystem.init();
+            Subsystem.periodic();
         }
     }
 

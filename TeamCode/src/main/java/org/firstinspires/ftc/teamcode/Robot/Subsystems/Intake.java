@@ -36,6 +36,15 @@ public class Intake extends PedrioSubsystem {
         }
         robot.HsSlide.set(Value + FF);
     }
+    public void ExtendLimelight(double distance){
+        double Value = Config.HorizontalController.calculate(Config.TolerantDistanceFromSample,distance);
+        double FF = Config.HorizontalSlideFF;
+        if (this.intakeState == IntakeState.RETRACTING){
+            FF  = -FF;
+        }
+        robot.HsSlide.set(Value + FF);
+
+    }
 
     public void resetEncoders(){
         this.robot.HsSlide.resetEncoder();
