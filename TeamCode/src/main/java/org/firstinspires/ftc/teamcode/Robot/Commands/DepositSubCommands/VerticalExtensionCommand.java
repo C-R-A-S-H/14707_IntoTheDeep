@@ -1,0 +1,34 @@
+package org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands;
+
+import com.arcrobotics.ftclib.command.CommandBase;
+
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
+
+public class VerticalExtensionCommand extends CommandBase {
+    private Deposit deposit;
+    private double pose;
+    public VerticalExtensionCommand(Deposit deposit, double pose){
+        this.deposit = deposit;
+        this.pose = pose;
+        addRequirements(this.deposit);
+    }
+    @Override
+    public void initialize() {
+        super.initialize();
+    }
+
+    @Override
+    public void execute() {
+        this.deposit.SetSlidePose(this.pose);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+       this.deposit.SetSlidePower(0);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return this.deposit.SlideAtPoint();
+    }
+}

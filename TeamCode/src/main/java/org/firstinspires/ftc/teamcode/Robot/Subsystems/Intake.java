@@ -9,8 +9,9 @@ public class Intake extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
     public IntakeState intakeState = IntakeState.DISABLED;
     public double HorizontalEncTicks = this.robot.HsSlide.getCurrentPosition();
-    public void SetPower(double WantedPower) {
-        robot.IntakeMotor.set(WantedPower);
+
+    public void SetPower(double velocity) {
+        robot.IntakeMotor.setVelocity(velocity);
     }
 
     public void setSlidePower(double power){

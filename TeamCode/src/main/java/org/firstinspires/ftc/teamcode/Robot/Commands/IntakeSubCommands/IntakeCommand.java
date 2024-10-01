@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 import org.firstinspires.ftc.teamcode.Pedrio.Sensors.BeamBreak;
 import org.firstinspires.ftc.teamcode.Pedrio.Sensors.MagLimitSwitch;
@@ -11,18 +12,18 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 public class IntakeCommand extends SequentialCommandGroup {
     Intake intake;
     LimeLightHelper ll;
-    BeamBreak TransferBeamBreak;
+    NormalizedColorSensor transferColorSensor;
     MagLimitSwitch magLimitSwitch;
 
-    public IntakeCommand(Intake intake, LimeLightHelper ll, BeamBreak TransferBeamBreak, MagLimitSwitch magLimitSwitch){
+    public IntakeCommand(Intake intake, LimeLightHelper ll, NormalizedColorSensor transferColorSensor, MagLimitSwitch magLimitSwitch){
         this.intake = intake;
         this.ll = ll;
-        this.TransferBeamBreak = TransferBeamBreak;
+        this.transferColorSensor = transferColorSensor;
         this.magLimitSwitch = magLimitSwitch;
         addCommands(
                 new HalfExtendCommand(this.intake),
                 new FullExtendCommand(this.intake,this.ll),
-                new IntakeActivationCommand(this.intake,this.TransferBeamBreak)
+                new IntakeActivationCommand(this.intake,this.transferColorSensor)
         );
         addRequirements(this.intake,this.ll);
 

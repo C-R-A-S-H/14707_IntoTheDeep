@@ -41,6 +41,13 @@ public class Config {
 
     public static boolean isAuto = true;
 
+    public static int BlueSampleColor = 0;
+    public static int RedSampleColor = 1;
+    public static int YellowSampleColor = 2;
+
+    public static boolean AllianceIsBlue = true;//false for red
+
+
 
 
 }

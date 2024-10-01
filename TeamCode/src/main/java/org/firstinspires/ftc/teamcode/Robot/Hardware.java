@@ -2,11 +2,13 @@ package org.firstinspires.ftc.teamcode.Robot;
 
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
@@ -31,8 +33,9 @@ public class Hardware {
     public MotorEx BrMotor;
 
     public MotorEx HsSlide;
-    public MotorEx AVSlide;
-    public MotorEx BVSlide;
+
+    public MotorEx LeftVSlide;
+    public MotorEx RightVSlide;
 
     public MotorEx IntakeMotor;
 
@@ -47,7 +50,8 @@ public class Hardware {
     public Limelight3A limelight3A;
 
     public BeamBreak intakeBeamBreak;
-    public BeamBreak transferBeamBreak;
+    public NormalizedColorSensor transferColorSensor;
+
     public MagLimitSwitch horizontalLimitSwitch;
     public MagLimitSwitch verticalLimitSwitch;
 
@@ -75,8 +79,12 @@ public class Hardware {
         this.FrMotor = new MotorEx(hmap,"FrontRight");
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
+
         this.HsSlide = new MotorEx(hmap, "HsSlide");
-        this.AVSlide = new MotorEx(hmap, "VsSlide");
+
+        this.LeftVSlide = new MotorEx(hmap, "LeftVSlide");
+        this.LeftVSlide.setInverted(true);
+        this.RightVSlide = new MotorEx(hmap,"RightVSlide");
 
         this.DepositClaw = hmap.get(Servo.class,"DepositClaw");
         this.DepositPivot1Left = hmap.get(Servo.class,"DepositPivot1Left");
@@ -91,7 +99,8 @@ public class Hardware {
         this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
         this.intakeBeamBreak = new BeamBreak(hmap,"intakeBeamBreak");
-        this.transferBeamBreak = new BeamBreak(hmap,"transferBeamBreak");
+        this.transferColorSensor = hmap.get(NormalizedColorSensor.class, "transferColorSensor");
+
         this.horizontalLimitSwitch = new MagLimitSwitch(hmap,"horizontalLimitLimitSwitch");
         this.verticalLimitSwitch = new MagLimitSwitch(hmap,"verticalLimitSwitch");
 
