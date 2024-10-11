@@ -20,17 +20,18 @@ public class RetractionCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(this.intake.HorizontalEncTicks < 300){
-            this.intake.setSlidePower(-0.3);
-        }else{
-            this.intake.setSlidePower(-1);
-        }
         this.intake.intakeState = IntakeState.RETRACTING;
+        if(this.intake.HorizontalEncTicks < 300){
+            this.intake.setSlideVelocity(-0.3 * 2000);
+        }else{
+            this.intake.setSlideVelocity(-0.7 * 2000);
+        }
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.setSlidePower(0);
+        this.intake.setSlideVelocity(0);
         this.intake.resetEncoders();
     }
 

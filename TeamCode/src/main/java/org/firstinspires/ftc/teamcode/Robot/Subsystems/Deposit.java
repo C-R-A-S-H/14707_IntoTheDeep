@@ -12,6 +12,8 @@ public class Deposit extends PedrioSubsystem {
     public double LeftSlidePose = 0;
     public double RightSlidePose = 0;
 
+    public double AverageSlideEncoderPose = 0;
+
     public DepositStates depositStates = DepositStates.ScoringBasketsHigh;
 
     public void SetSlidePower(double WantedPower) {
@@ -22,7 +24,7 @@ public class Deposit extends PedrioSubsystem {
     public void SetSlidePose(double WantedPos) {
         double PositionAverage = (double) (robot.LeftVSlide.getCurrentPosition() + robot.RightVSlide.getCurrentPosition()) / 2;
         double Value = Config.VerticalController.calculate(WantedPos, PositionAverage);
-        double FF = Config.HorizontalSlideFF;
+        double FF = Config.VerticalSlideFF;
 
         if(depositStates == DepositStates.Retracting){
          FF  = -FF;
@@ -31,16 +33,22 @@ public class Deposit extends PedrioSubsystem {
         SetSlidePower(Value + FF);
     }
     
-    public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2,double claw){
+    public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){
         this.robot.DepositPivot1Left.setPosition(LeftPivot1);
         this.robot.DepositPivot1Right.setPosition(RightPivot1);
         this.robot.DepositPivot2.setPosition(Pivot2);
-        this.robot.DepositClaw.setPosition(claw);
 
+    }
+    public void ClawControl(double claw){
+        this.robot.DepositClaw.setPosition(claw);
     }
 
     public boolean SlideAtPoint(){
         return tolerance(averageError(LeftSlidePose, RightSlidePose), -5,5);
+    }
+    public void resetSlideEncoders(){
+        this.robot.LeftVSlide.resetEncoder();
+        this.robot.RightVSlide.resetEncoder();
     }
 
     private boolean tolerance(double value,double min,double max){
@@ -56,7 +64,6 @@ public class Deposit extends PedrioSubsystem {
 
     @Override
     public void periodic() {
-        this.LeftSlidePose = this.robot.LeftVSlide.getCurrentPosition();
-        this.RightSlidePose = this.robot.RightVSlide.getCurrentPosition();
+        AverageSlideEncoderPose = averageError(this.robot.LeftVSlide.getCurrentPosition(), this.robot.RightVSlide.getCurrentPosition());
     }
 }

@@ -34,6 +34,7 @@ public class FullExtendCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         this.intake.intakeState = IntakeState.EXTENDED;
+
         super.end(interrupted);
     }
 

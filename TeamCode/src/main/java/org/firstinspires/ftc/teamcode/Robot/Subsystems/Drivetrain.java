@@ -25,7 +25,7 @@ public class Drivetrain extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
     public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
 
-    public final SparkFunOTOS myOtos = robot.otos;
+    //public final SparkFunOTOS myOtos = robot.otos;
     //private CameraLocalization cameraLocalization = new CameraLocalization();
     private RegularFusing dataFuser = new RegularFusing();
 
@@ -38,7 +38,7 @@ public class Drivetrain extends PedrioSubsystem {
 
     public Follower follower = this.robot.follower;
 
-    public Pose2d getFusedPose(){
+    /*public Pose2d getFusedPose(){
         //TODO add limelight localization to fuse
         /*Pose2d apriltagpose;
         Pose2d cameraPose;
@@ -65,7 +65,7 @@ public class Drivetrain extends PedrioSubsystem {
             aprilTagPoses.clear();
         }
 
-         */
+
         Pose2d otosPose = new Pose2d(
                 myOtos.getPosition().x,
                 myOtos.getPosition().y,
@@ -76,10 +76,11 @@ public class Drivetrain extends PedrioSubsystem {
         //}
         return otosPose;
     }
+    */
 
-    public SparkFunOTOS.Pose2D getVelocity(){
-        return myOtos.getVelocity();
-    }
+    //public SparkFunOTOS.Pose2D getVelocity(){
+    //    return myOtos.getVelocity();
+  //  }
 
     public void driveFieldCentric(double x, double y, double turn, double gyroAngle) {
         drive.driveFieldCentric(x, y, turn, gyroAngle);
@@ -88,9 +89,9 @@ public class Drivetrain extends PedrioSubsystem {
         drive.driveFieldCentric(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond,speeds.omegaRadiansPerSecond,getRawIMUHeadingDegrees());
     }
 
-    public SparkFunOTOS.Pose2D getPose() {
-        return myOtos.getPosition();
-    }
+    //public SparkFunOTOS.Pose2D getPose() {
+      //  return myOtos.getPosition();
+   // }
 
     public double getRawIMUHeadingDegrees() {
         return robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
@@ -110,7 +111,7 @@ public class Drivetrain extends PedrioSubsystem {
     public void periodic() {
 
     }
-
+/*
     public void configureOtos(SparkFunOTOS.Pose2D startingPose) {
 
 
@@ -185,5 +186,7 @@ public class Drivetrain extends PedrioSubsystem {
         SparkFunOTOS.Version fwVersion = new SparkFunOTOS.Version();
         myOtos.getVersionInfo(hwVersion, fwVersion);
     }
+
+ */
 }
 

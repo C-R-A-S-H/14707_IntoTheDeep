@@ -1,35 +1,37 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands;
 
-import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
+import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
-public class VerticalExtensionCommand extends CommandBase {
+public class HighBarSpecimentScoreCommand extends SequentialCommandGroup  {
     private Deposit deposit;
-    private double pose;
-    public VerticalExtensionCommand(Deposit deposit, double pose){
+    public HighBarSpecimentScoreCommand(Deposit deposit){
         this.deposit = deposit;
-        this.pose = pose;
         addRequirements(this.deposit);
     }
+
     @Override
     public void initialize() {
-        super.initialize();
+        addCommands(new VerticalExtensionCommand(this.deposit, Config.HighBarSlideSetpoint)
+
+                );
     }
 
     @Override
     public void execute() {
-        this.deposit.SetSlidePose(this.pose);
+        super.execute();
     }
 
     @Override
     public void end(boolean interrupted) {
-       this.deposit.SetSlidePower(0);
-       super.end(interrupted);
+        super.end(interrupted);
     }
 
     @Override
     public boolean isFinished() {
-        return this.deposit.SlideAtPoint();
+        return super.isFinished();
     }
 }
+

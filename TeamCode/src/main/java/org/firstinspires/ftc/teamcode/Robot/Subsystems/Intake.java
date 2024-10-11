@@ -14,8 +14,8 @@ public class Intake extends PedrioSubsystem {
         robot.IntakeMotor.setVelocity(velocity);
     }
 
-    public void setSlidePower(double power){
-        this.robot.HsSlide.set(power);
+    public void setSlideVelocity(double power){
+        this.robot.HsSlide.setVelocity(power);
     }
 
     public void DropDown() {

@@ -34,7 +34,7 @@ public class NonAutoTeleop extends OpMode {
 
     private FullExtendCommand fullExtendCommand = new FullExtendCommand(this.robot.intake,this.robot.ll);
     private HalfExtendCommand halfExtendCommand = new HalfExtendCommand(this.robot.intake);
-    private IntakeActivationCommand intakeActivationCommand = new IntakeActivationCommand(this.robot.intake,this.robot.intakeBeamBreak);
+    private IntakeActivationCommand intakeActivationCommand = new IntakeActivationCommand(this.robot.intake,this.robot.transferColorSensor);
     private RetractionCommand retractionCommand = new RetractionCommand(this.robot.intake,this.robot.horizontalLimitSwitch);
 
 
