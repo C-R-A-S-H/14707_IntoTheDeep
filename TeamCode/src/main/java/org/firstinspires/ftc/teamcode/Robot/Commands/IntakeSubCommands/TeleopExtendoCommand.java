@@ -11,10 +11,8 @@ import java.util.function.DoubleSupplier;
 
 public class TeleopExtendoCommand extends CommandBase {
     private Intake intake;
-    private ZLColorSensor colorSensor;
-    public TeleopExtendoCommand(Intake intake, ZLColorSensor colorSensor){
+    public TeleopExtendoCommand(Intake intake){
         this.intake = intake;
-        this.colorSensor = colorSensor;
     }
 
     @Override

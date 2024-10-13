@@ -16,6 +16,7 @@ public class RetractionCommand extends CommandBase {
     @Override
     public void initialize() {
         this.intake.IntakeUp();
+        this.intake.SetPower(-2000);
     }
 
     @Override

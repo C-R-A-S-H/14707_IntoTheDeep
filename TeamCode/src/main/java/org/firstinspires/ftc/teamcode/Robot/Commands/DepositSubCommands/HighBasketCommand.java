@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
@@ -15,7 +16,8 @@ public class HighBasketCommand extends SequentialCommandGroup {
     public void initialize() {
         addCommands(
                 new VerticalExtensionCommand(this.deposit, Config.HighBasketSlideSetpoint).alongWith(
-                new DepositPivotingCommand(this.deposit, Config.LeftAScoreBasketPose, Config.RightAScoreBasketPose, Config.ClawPivotScoreBasketPose))
+                new DepositPivotingCommand(this.deposit, Config.LeftAScoreBasketPose, Config.RightAScoreBasketPose, Config.ClawPivotScoreBasketPose)),
+                new WaitCommand(100)
         );
     }
 

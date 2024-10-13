@@ -16,11 +16,13 @@ public class FollowPathCommand extends CommandBase {
         this.path = path;
         this.dt = dt;
         UsingPath = true;
+        addRequirements(this.dt);
     }
 
     public FollowPathCommand(BezierCurve bezierCurve, Drivetrain dt){
         this.bezierCurve = bezierCurve;
         this.dt = dt;
+        addRequirements(this.dt);
     }
 
     @Override

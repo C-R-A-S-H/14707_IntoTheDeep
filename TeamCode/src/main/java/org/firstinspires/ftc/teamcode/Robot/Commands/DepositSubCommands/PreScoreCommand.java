@@ -8,11 +8,8 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
 public class PreScoreCommand extends SequentialCommandGroup {
     private Deposit deposit;
-    private MagLimitSwitch magLimitSwitch;
-    private boolean isDone = true;
-    public PreScoreCommand(Deposit deposit, MagLimitSwitch magLimitSwitch){
+    public PreScoreCommand(Deposit deposit){
         this.deposit = deposit;
-        this.magLimitSwitch = magLimitSwitch;
         addRequirements(this.deposit);
     }
     @Override
@@ -50,10 +47,7 @@ public class PreScoreCommand extends SequentialCommandGroup {
 
     @Override
     public boolean isFinished() {
-        return this.isDone;
+        return true;
     }
 
-    private void setIsDone(boolean value){
-            this.isDone = value;
-    }
 }

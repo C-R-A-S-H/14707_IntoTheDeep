@@ -1,17 +1,14 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands;
 
-import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
-import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
 public class TransferCommand extends SequentialCommandGroup {
     Deposit deposit;
-    boolean done = false;
     public TransferCommand(Deposit deposit){
         this.deposit = deposit;
         addRequirements(this.deposit);
@@ -20,8 +17,7 @@ public class TransferCommand extends SequentialCommandGroup {
     public void initialize() {
         addCommands(
                 new InstantCommand( () -> this.deposit.ClawControl(Config.ClawClosePose)),
-                new WaitCommand(200),
-                new InstantCommand(() -> this.setDone(true))
+                new WaitCommand(200)
         );
     }
 
@@ -37,10 +33,7 @@ public class TransferCommand extends SequentialCommandGroup {
 
     @Override
     public boolean isFinished() {
-        return this.done;
+        return true;
     }
 
-    public void setDone(boolean value){
-        this.done = value;
-    }
 }

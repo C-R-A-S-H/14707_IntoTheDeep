@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.Pedrio.Vision;
 
 
+import com.arcrobotics.ftclib.geometry.Pose2d;
+import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 
@@ -15,6 +17,7 @@ import java.util.List;
 
 public class LimeLightHelper extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
+    private double heading;
 
 
     public void PipelineSwitch(int index) {
@@ -51,6 +54,25 @@ public class LimeLightHelper extends PedrioSubsystem {
 
         return distanceFromLimelightToGoalInches;
 
+    }
+
+    public boolean checkForValidTags(){
+        return this.robot.limelight3A.getLatestResult().getBotposeTagCount() >= 1;
+    }
+
+    public void updateHeading(double heading){
+        this.robot.limelight3A.updateRobotOrientation(heading);
+        this.heading = heading;
+    }
+
+    public Pose2d getPose(){
+        Pose3D pose = this.robot.limelight3A.getLatestResult().getBotpose_MT2();
+
+        return new Pose2d(
+                pose.getPosition().x,
+                pose.getPosition().y,
+                new Rotation2d(this.heading)
+        );
     }
 
     @Override
