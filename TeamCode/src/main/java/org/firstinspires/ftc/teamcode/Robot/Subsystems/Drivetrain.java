@@ -4,9 +4,11 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.ChassisSpeeds;
 import com.arcrobotics.ftclib.kinematics.wpilibkinematics.MecanumDriveKinematics;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -21,9 +23,28 @@ import java.util.ArrayList;
 
 
 public class Drivetrain extends PedrioSubsystem {
-
     private final Hardware robot = Hardware.getInstance();
-    public MecanumDrive drive = new MecanumDrive(robot.FlMotor, robot.FrMotor, robot.BlMotor, robot.BrMotor);
+
+
+    private MotorEx FlMotor;
+    private MotorEx FrMotor;
+    private MotorEx BlMotor;
+    private MotorEx BrMotor;
+
+    public Follower follower;
+
+    public Drivetrain(HardwareMap hmap){
+        this.FlMotor = new MotorEx(hmap,"FrontLeft");
+        this.FrMotor = new MotorEx(hmap,"FrontRight");
+        this.BlMotor = new MotorEx(hmap,"BackLeft");
+        this.BrMotor = new MotorEx(hmap,"BackRight");
+
+        this.follower = new Follower(hmap);
+
+
+    }
+    public MecanumDrive drive = new MecanumDrive(this.FlMotor, this.FrMotor, this.BlMotor, this.BrMotor);
+
 
     //public final SparkFunOTOS myOtos = robot.otos;
     //private CameraLocalization cameraLocalization = new CameraLocalization();
@@ -35,8 +56,6 @@ public class Drivetrain extends PedrioSubsystem {
             new Translation2d(-Config.LENGTH / 2, Config.WIDTH / 2),
             new Translation2d(-Config.LENGTH / 2, -Config.WIDTH / 2)
     );
-
-    public Follower follower = this.robot.follower;
 
     /*public Pose2d getFusedPose(){
         //TODO add limelight localization to fuse
@@ -85,26 +104,21 @@ public class Drivetrain extends PedrioSubsystem {
     public void driveFieldCentric(double x, double y, double turn, double gyroAngle) {
         drive.driveFieldCentric(x, y, turn, gyroAngle);
     }
-    public void driveFieldCentricWithWheelSpeeds(ChassisSpeeds speeds){
-        drive.driveFieldCentric(speeds.vxMetersPerSecond,speeds.vyMetersPerSecond,speeds.omegaRadiansPerSecond,getRawIMUHeadingDegrees());
+    public void driveRobotCentric(double x, double y, double turn){
+        drive.driveRobotCentric(x,y,turn);
     }
+
 
     //public SparkFunOTOS.Pose2D getPose() {
       //  return myOtos.getPosition();
    // }
 
-    public double getRawIMUHeadingDegrees() {
-        return robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
 
-    public double getRawIMUHeadingRadians() {
-        return robot.imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-    }
 
 
     @Override
     public void init() {
-        this.follower = this.robot.follower;
+
     }
 
     @Override

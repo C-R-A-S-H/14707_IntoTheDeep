@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.DepositStates;
 
 public class Deposit extends PedrioSubsystem {
-    private final Hardware robot = Hardware.getInstance();
 
 
     public double LeftSlidePose = 0;
@@ -16,13 +19,32 @@ public class Deposit extends PedrioSubsystem {
 
     public DepositStates depositStates = DepositStates.ScoringBasketsHigh;
 
+    private Servo DepositPivot1Left;
+    private Servo DepositPivot1Right;
+    private Servo DepositPivot2;//on the right
+    private Servo DepositClaw;
+
+    public MotorEx LeftVSlide;
+    public MotorEx RightVSlide;
+
+    public Deposit(HardwareMap hmap){
+
+        this.LeftVSlide = new MotorEx(hmap, "LeftVSlide");
+        this.RightVSlide = new MotorEx(hmap,"RightVSlide");
+
+        this.DepositClaw = hmap.get(Servo.class,"DepositClaw");
+        this.DepositPivot1Left = hmap.get(Servo.class,"DepositPivot1Left");
+        this.DepositPivot1Right = hmap.get(Servo.class,"DepositPivot1Right");
+        this.DepositPivot2 = hmap.get(Servo.class,"DepositPivot2");
+    }
+
     public void SetSlidePower(double WantedPower) {
-        robot.LeftVSlide.set(WantedPower);
-        robot.RightVSlide.set(WantedPower);
+        this.LeftVSlide.set(WantedPower);
+        this.RightVSlide.set(WantedPower);
     }
 
     public void SetSlidePose(double WantedPos) {
-        double PositionAverage = (double) (robot.LeftVSlide.getCurrentPosition() + robot.RightVSlide.getCurrentPosition()) / 2;
+        double PositionAverage = (double) (this.LeftVSlide.getCurrentPosition() + this.RightVSlide.getCurrentPosition()) / 2;
         double Value = Config.VerticalController.calculate(WantedPos, PositionAverage);
         double FF = Config.VerticalSlideFF;
 
@@ -34,21 +56,21 @@ public class Deposit extends PedrioSubsystem {
     }
     
     public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){
-        this.robot.DepositPivot1Left.setPosition(LeftPivot1);
-        this.robot.DepositPivot1Right.setPosition(RightPivot1);
-        this.robot.DepositPivot2.setPosition(Pivot2);
+        this.DepositPivot1Left.setPosition(LeftPivot1);
+        this.DepositPivot1Right.setPosition(RightPivot1);
+        this.DepositPivot2.setPosition(Pivot2);
 
     }
     public void ClawControl(double claw){
-        this.robot.DepositClaw.setPosition(claw);
+        this.DepositClaw.setPosition(claw);
     }
 
     public boolean SlideAtPoint(){
         return tolerance(averageError(LeftSlidePose, RightSlidePose), -5,5);
     }
     public void resetSlideEncoders(){
-        this.robot.LeftVSlide.resetEncoder();
-        this.robot.RightVSlide.resetEncoder();
+        this.LeftVSlide.resetEncoder();
+        this.RightVSlide.resetEncoder();
     }
 
     private boolean tolerance(double value,double min,double max){
@@ -59,11 +81,10 @@ public class Deposit extends PedrioSubsystem {
     }
     @Override
     public void init() {
-
     }
 
     @Override
     public void periodic() {
-        AverageSlideEncoderPose = averageError(this.robot.LeftVSlide.getCurrentPosition(), this.robot.RightVSlide.getCurrentPosition());
+        AverageSlideEncoderPose = averageError(this.LeftVSlide.getCurrentPosition(), this.RightVSlide.getCurrentPosition());
     }
 }

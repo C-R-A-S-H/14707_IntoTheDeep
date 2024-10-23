@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.WantedColor;
 import java.sql.Array;
 import java.util.ArrayList;
 
-@com.acmerobotics.dashboard.config.Config
+//@com.acmerobotics.dashboard.config.Config
 public class Config {
     //this is where all pid controllers and values get initialized
 

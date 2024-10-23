@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.teamcode.Pedrio.Vision.LimeLightHelper;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.NumNum.NumNumDrivetrain;
-import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
+//import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class NumNumTest extends OpMode {
     //private Hardware robot = Hardware.getInstance();
     static final double TRACKWIDTH = 16;
     static final double CENTER_WHEEL_OFFSET = 2.4;
-    private Pose currentPose;
+    //private Pose currentPose;
 
     private Motor FlMotor;
     private Motor FrMotor;

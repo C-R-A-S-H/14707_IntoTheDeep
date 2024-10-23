@@ -66,7 +66,7 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
 
     @Override
     public void execute() {
-        this.ll.updateHeading(this.dt.getRawIMUHeadingDegrees());
+        //this.ll.updateHeading(this.dt.getRawIMUHeadingDegrees());
     }
 
 
@@ -180,3 +180,4 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
 
 
  */
+

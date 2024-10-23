@@ -4,8 +4,10 @@ import android.graphics.Color;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Pedrio.Sensors.BeamBreak;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
@@ -33,12 +35,20 @@ public class IntakeActivationCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        this.intake.SetPower(-2000);
         super.end(interrupted);
     }
 
     @Override
     public boolean isFinished() {
-        return checkForSample();
+        return ProxCheck();
+    }
+
+    public boolean ProxCheck(){
+        if(this.transferColorSensor instanceof DistanceSensor){
+            return ((DistanceSensor) this.transferColorSensor).getDistance(DistanceUnit.CM) < 10;
+        }
+        return false;
     }
 
     public boolean checkForSample(){

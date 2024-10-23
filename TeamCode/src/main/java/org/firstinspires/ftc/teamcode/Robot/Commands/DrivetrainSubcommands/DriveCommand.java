@@ -13,15 +13,13 @@ public class DriveCommand extends CommandBase  {
         private DoubleSupplier xSupplier;
         private DoubleSupplier ySupplier;
         private DoubleSupplier zSupplier;
-        private IMU imu;
 
 
-    public DriveCommand(Drivetrain dt, DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier zSupplier, IMU imu){
+    public DriveCommand(Drivetrain dt, DoubleSupplier xSupplier, DoubleSupplier ySupplier, DoubleSupplier zSupplier){
         this.dt = dt;
         this.xSupplier = xSupplier;
         this.ySupplier = ySupplier;
         this.zSupplier = zSupplier;
-        this.imu = imu;
 
         addRequirements(dt);
     }
@@ -33,11 +31,11 @@ public class DriveCommand extends CommandBase  {
     @Override
     public void execute() {
 
-            this.dt.driveFieldCentric(
-                    this.xSupplier.getAsDouble()
+            this.dt.driveRobotCentric(
+                    -this.xSupplier.getAsDouble()
                     , this.ySupplier.getAsDouble()
-                    , this.zSupplier.getAsDouble()
-                    , imu.getRobotYawPitchRollAngles().getYaw());
+                    , -this.zSupplier.getAsDouble()
+                    );
 
     }
 

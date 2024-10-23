@@ -21,8 +21,6 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstan
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -30,7 +28,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.PoseUpdater;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierPoint;
@@ -65,11 +62,11 @@ import java.util.List;
 public class Follower {
     private HardwareMap hardwareMap;
 
-    private MotorEx leftFront;
-    private MotorEx leftRear;
-    private MotorEx rightFront;
-    private MotorEx rightRear;
-    private List<MotorEx> motors;
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightFront;
+    private DcMotorEx rightRear;
+    private List<DcMotorEx> motors;
 
     private DriveVectorScaler driveVectorScaler;
 
@@ -145,8 +142,6 @@ public class Follower {
     public static boolean useHeading = true;
     public static boolean useDrive = true;
 
-    private final Hardware robot = Hardware.getInstance();
-
     /**
      * This creates a new Follower given a HardwareMap.
      *
@@ -166,26 +161,27 @@ public class Follower {
     public void initialize() {
         driveVectorScaler = new DriveVectorScaler(FollowerConstants.frontLeftVector);
         poseUpdater = new PoseUpdater(hardwareMap);
-        leftFront = this.robot.FlMotor;
-        leftRear = this.robot.FrMotor;
-        rightRear = this.robot.BrMotor;
-        rightFront = this.robot.FrMotor;
+
+        leftFront = hardwareMap.get(DcMotorEx.class, leftFrontMotorName);
+        leftRear = hardwareMap.get(DcMotorEx.class, leftRearMotorName);
+        rightRear = hardwareMap.get(DcMotorEx.class, rightRearMotorName);
+        rightFront = hardwareMap.get(DcMotorEx.class, rightFrontMotorName);
+
         // TODO: Make sure that this is the direction your motors need to be reversed in.
-        leftFront.setInverted(true);
-        assert leftRear != null;
-        leftRear.setInverted(true);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         motors = Arrays.asList(leftFront, leftRear, rightFront, rightRear);
 
-        //for (MotorEx motor : motors) {
-          //  MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
-           // motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
-            //motor.setMotorType(motorConfigurationType);
-       // }
+        for (DcMotorEx motor : motors) {
+            MotorConfigurationType motorConfigurationType = motor.getMotorType().clone();
+            motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+            motor.setMotorType(motorConfigurationType);
+        }
 
-       // for (DcMotorEx motor : motors) {
-        //    motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-       // }
+        for (DcMotorEx motor : motors) {
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        }
 
         dashboardPoseTracker = new DashboardPoseTracker(poseUpdater);
 
@@ -450,7 +446,7 @@ public class Follower {
                     limitDrivePowers();
 
                     for (int i = 0; i < motors.size(); i++) {
-                        motors.get(i).set(drivePowers[i]);
+                        motors.get(i).setPower(drivePowers[i]);
                     }
                 } else {
                     if (isBusy) {
@@ -463,7 +459,7 @@ public class Follower {
                         limitDrivePowers();
 
                         for (int i = 0; i < motors.size(); i++) {
-                            motors.get(i).set(drivePowers[i]);
+                            motors.get(i).setPower(drivePowers[i]);
                         }
                     }
                     if (currentPath.isAtParametricEnd()) {
@@ -507,7 +503,7 @@ public class Follower {
             limitDrivePowers();
 
             for (int i = 0; i < motors.size(); i++) {
-                motors.get(i).set(drivePowers[i]);
+                motors.get(i).setPower(drivePowers[i]);
             }
         }
     }
@@ -647,7 +643,7 @@ public class Follower {
         teleopHeadingVector = new Vector();
 
         for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).set(0);
+            motors.get(i).setPower(0);
         }
     }
 
