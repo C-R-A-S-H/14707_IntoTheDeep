@@ -25,84 +25,42 @@ import java.util.function.DoubleSupplier;
 
 @TeleOp(name ="No Auto Teleop")
 public class NonAutoTeleop extends OpMode {
-    //private Hardware robot = Hardware.getInstance();
+    private Hardware robot = Hardware.getInstance();
 
+    private DoubleSupplier xSupplier = this::getX;
+    private DoubleSupplier ySupplier = this::getY;
+    private DoubleSupplier zSupplier = this::getTurn;
 
-    private MotorEx frontLeft;
-    private MotorEx frontRight;
-    private MotorEx backLeft;
-    private MotorEx backRight;
-
-    private MecanumDrive drive;
-
-    private Servo Arm;
-    private Servo Wrist;
-    private Servo DepositClaw;
-
-    public MotorEx SlidesA;
-    public MotorEx SlidesB;
     @Override
     public void init() {
-        //this.robot.Init(hardwareMap);
+        this.robot.Init(hardwareMap);
 
 
-        this.frontLeft = new MotorEx(hardwareMap,"FrontLeft");
-        this.frontRight = new MotorEx(hardwareMap,"FrontRight");
-        this.backLeft = new MotorEx(hardwareMap,"BackLeft");
-        this.backRight = new MotorEx(hardwareMap,"BackRight");
 
-        this.SlidesA = new MotorEx(hardwareMap,"SlideA");
-        this.SlidesB = new MotorEx(hardwareMap, "SlideB");
-
-        this.Arm = hardwareMap.get(Servo.class,"Arm");
-        this.Wrist = hardwareMap.get(Servo.class, "Wrist");
-        this.DepositClaw = hardwareMap.get(Servo.class,"Claw");
-
-
-        drive = new MecanumDrive(this.frontLeft, this.frontRight, this.backLeft, this.backRight);
-
-        // CommandScheduler.getInstance().setDefaultCommand(this.robot.drivetrain,new DriveCommand(this.robot.drivetrain,xSupplier,ySupplier,zSupplier)); //add drive command
+        CommandScheduler.getInstance().setDefaultCommand(this.robot.drivetrain,new DriveCommand(this.robot.drivetrain,xSupplier,ySupplier,zSupplier)); //add drive command
     }
 
     @Override
     public void loop() {
-
-        this.drive.driveRobotCentric(
-                -gamepad1.left_stick_x * 0.8,
-                gamepad1.left_stick_y * 0.8,
-                -gamepad1.right_stick_x * 0.8);
-
-        double power = gamepad2.left_stick_y;
-
-        this.SlidesA.set(power);
-        this.SlidesB.set(power);
-
-        if(gamepad2.a){
-            Wrist.setPosition(0.5);
-            Arm.setPosition(0.2);
-        }else if(gamepad2.b){
-            Wrist.setPosition(0.8);
-            Arm.setPosition(-1);
-        }else
-        if(gamepad2.x){
-            DepositClaw.setPosition(1);
-        }else
-        if(gamepad2.y){
-            DepositClaw.setPosition(-1);
-        }
+        this.robot =  Hardware.getInstance();
+        this.robot.Loop();
 
 
     }
 
     public void createBindings(){
-        /*Button Intake = (new GamepadButton(driver1, GamepadKeys.Button.A).whenHeld(
-                new TeleopExtendoCommand(this.robot.intake).alongWith(
-                        new IntakeActivationCommand(this.robot.intake, this.robot.transferColorSensor).andThen(new RetractionVoltageCommand(this.robot.intake))
-                )
-        ).whenReleased(new RetractionVoltageCommand(this.robot.intake)));
+      //Button class
+        
+    }
 
-         */
-
+    public double getX(){
+        return gamepad1.left_stick_x;
+    }
+    public double getY(){
+        return gamepad1.left_stick_y;
+    }
+    public double getTurn(){
+        return gamepad1.right_stick_x;
     }
 
 }
