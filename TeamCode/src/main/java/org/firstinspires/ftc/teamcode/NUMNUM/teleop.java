@@ -23,7 +23,7 @@ public class teleop extends OpMode {
         this.BLM = new MotorEx(hardwareMap, "BLM");
         this.BRM = new MotorEx(hardwareMap, "BRM");
 
-        MD = new MecanumDrive(this.FRM, this.FRM, this.BLM, this.BRM);
+        MD = new MecanumDrive(this.FLM, this.FRM, this.BLM, this.BRM);
     }
 
     @Override
