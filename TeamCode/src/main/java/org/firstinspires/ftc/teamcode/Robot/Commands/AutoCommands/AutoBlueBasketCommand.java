@@ -27,16 +27,15 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
     private Intake intake;
     private Deposit deposit;
     private MagLimitSwitch verticalMagSwitch;
-    private MagLimitSwitch horizontalMagSwitch;
+
     private NormalizedColorSensor colorSensor;
     private LimeLightHelper ll;
 
-    public AutoBlueBasketCommand(Drivetrain dt, Intake intake, Deposit deposit, MagLimitSwitch verticalMagSwitch, MagLimitSwitch horizontalMagSwitch, NormalizedColorSensor colorSensor, LimeLightHelper ll, Command... commands) {
+    public AutoBlueBasketCommand(Drivetrain dt, Intake intake, Deposit deposit, MagLimitSwitch verticalMagSwitch, NormalizedColorSensor colorSensor, LimeLightHelper ll, Command... commands) {
         this.dt = dt;
         this.intake = intake;
         this.deposit = deposit;
         this.verticalMagSwitch = verticalMagSwitch;
-        this.horizontalMagSwitch = horizontalMagSwitch;
         this.colorSensor = colorSensor;
         this.ll = ll;
     }

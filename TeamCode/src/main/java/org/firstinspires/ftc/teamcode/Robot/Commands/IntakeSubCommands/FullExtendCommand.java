@@ -12,12 +12,9 @@ import java.util.List;
 
 public class FullExtendCommand extends CommandBase {
     private Intake intake;
-    private LimeLightHelper ll;
-    private double ea;
-    public FullExtendCommand(Intake intake, LimeLightHelper ll){
+    public FullExtendCommand(Intake intake){
         this.intake = intake;
-        this.ll = ll;
-        addRequirements(this.intake,this.ll);
+
     }
     @Override
     public void initialize() {
@@ -26,20 +23,23 @@ public class FullExtendCommand extends CommandBase {
 
     @Override
     public void execute() {
-        ea = ll.getDistanceFromSample(ll.getColorData().get(0));
+        //ea = ll.getDistanceFromSample(ll.getColorData().get(0));
         this.intake.intakeState = IntakeState.EXTENDING;
-        this.intake.ExtendLimelight(ea);
+        this.intake.SetSlidePos(Config.FullyExtendedSlideEncPos);
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.intakeState = IntakeState.EXTENDED;
+        if (!interrupted){
+
+            this.intake.intakeState = IntakeState.EXTENDED;
+        }
 
         super.end(interrupted);
     }
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(this.intake.HorizontalEncTicks, ea - 0.5,ea + 0.5);
+        return this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
     }
 }

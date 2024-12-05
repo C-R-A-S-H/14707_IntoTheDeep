@@ -19,6 +19,8 @@ public class Intake extends PedrioSubsystem {
     public Servo DropDownLeft;
     public Servo DropDownRight;
 
+    public double setpoint;
+
     public Intake(HardwareMap hmap){
         this.HsSlide = new MotorEx(hmap, "HsSlide");
         this.IntakeMotor = new MotorEx(hmap,"IntakeMotor");
@@ -55,13 +57,19 @@ public class Intake extends PedrioSubsystem {
         this.intakeState = IntakeState.RETRACTING;
     }
 
-    public void SetSlidePos(double WantedPos) {
+    private void InternalSetSlidePose(double WantedPos){
+        this.setpoint = WantedPos;
         double Value = Config.HorizontalController.calculate(WantedPos, HorizontalEncTicks * Config.HorizontalSlideTicksToInches);
         double FF = Config.HorizontalSlideFF;
-        if (this.intakeState == IntakeState.RETRACTING){
+        if (this.intakeState == IntakeState.RETRACTING || this.intakeState == IntakeState.AT_ZERO){
             FF  = -FF;
         }
         this.HsSlide.set(Value + FF);
+    }
+
+    public void SetSlidePos(double WantedPos) {
+        this.setpoint = WantedPos;
+
     }
     public void ExtendLimelight(double distance){
         double Value = Config.HorizontalController.calculate(Config.TolerantDistanceFromSample,distance);
@@ -85,6 +93,7 @@ public class Intake extends PedrioSubsystem {
     @Override
     public void periodic() {
         HorizontalEncTicks = this.HsSlide.getCurrentPosition();
+        InternalSetSlidePose(setpoint);
     }
 
     public boolean tolerance(double value,double min,double max){

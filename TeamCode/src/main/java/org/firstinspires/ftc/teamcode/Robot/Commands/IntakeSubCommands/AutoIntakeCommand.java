@@ -12,22 +12,19 @@ public class AutoIntakeCommand extends SequentialCommandGroup {
     Intake intake;
     LimeLightHelper ll;
     NormalizedColorSensor transferColorSensor;
-    MagLimitSwitch magLimitSwitch;
 
-    public AutoIntakeCommand(Intake intake, LimeLightHelper ll, NormalizedColorSensor transferColorSensor, MagLimitSwitch magLimitSwitch){
+
+    public AutoIntakeCommand(Intake intake, LimeLightHelper ll, NormalizedColorSensor transferColorSensor){
         this.intake = intake;
         this.ll = ll;
         this.transferColorSensor = transferColorSensor;
-        this.magLimitSwitch = magLimitSwitch;
 
-        addRequirements(this.intake,this.ll);
 
     }
     @Override
     public void initialize() {
         addCommands(
-                new HalfExtendCommand(this.intake),
-                new FullExtendCommand(this.intake,this.ll),
+                new FullExtendCommand(this.intake),
                 new IntakeActivationCommand(this.intake,this.transferColorSensor)
         );
     }
@@ -39,9 +36,10 @@ public class AutoIntakeCommand extends SequentialCommandGroup {
 
     @Override
     public void end(boolean interrupted) {
-        addCommands(new RetractionCommand(this.intake, this.magLimitSwitch));
+        addCommands(new RetractionCommand(this.intake));
 
     }
+
 
     @Override
     public boolean isFinished() {

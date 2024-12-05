@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
+import com.arcrobotics.ftclib.hardware.motors.CRServo;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -24,6 +25,8 @@ public class Deposit extends PedrioSubsystem {
     private Servo DepositPivot2;//on the right
     private Servo DepositClaw;
 
+
+
     public MotorEx LeftVSlide;
     public MotorEx RightVSlide;
 
@@ -41,6 +44,7 @@ public class Deposit extends PedrioSubsystem {
     public void SetSlidePower(double WantedPower) {
         this.LeftVSlide.set(WantedPower);
         this.RightVSlide.set(WantedPower);
+
     }
 
     public void SetSlidePose(double WantedPos) {

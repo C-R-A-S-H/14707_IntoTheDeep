@@ -23,22 +23,22 @@ public class Config {
     public static double HorizontalSlideTicksToInches = 10.3;
 
     //pid controllers and ff
-    public static PIDController HorizontalController = new PIDController(0.001, 0, 0);
+    public static PIDController HorizontalController = new PIDController(0.3, 0, 0);
     public static PIDController VerticalController = new PIDController(0.001, 0, 0);
 
-    public static double HorizontalSlideFF = 0.1;
+    public static double HorizontalSlideFF = -0.1;
     public static double VerticalSlideFF = 0.1;
     //public static PIDController DropDownController = new PIDController(0.001, 0, 0);
 
     //setpoints
-    public static double DropDownPoseLeft = 0.1;
-    public static double DropDownPoseRight = -0.1;
+    public static double DropDownPoseLeft = 1;
+    public static double DropDownPoseRight = 1;
     public static double IntakeUpPoseLeft = 0;
     public static double IntakeUpPoseRight = 0;
 
-    public static double FullyExtendedSlideEncPos = 1000;
-    public static double HalfExtendedSlideEncPos = 400;
-    public static double RetractedSlideEncPos = 0;
+    public static double FullyExtendedSlideEncPos = 900;
+    public static double HalfExtendedSlideEncPos = 500;
+    public static double RetractedSlideEncPos = -50;
 
     public static double LeftATransferPose = 0;
     public static double RightATransferPose = 0;
