@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.NUMNUM;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 
 @TeleOp(name = "NUMNUM")
 public class teleop extends OpMode {
@@ -18,6 +20,8 @@ public class teleop extends OpMode {
 
     private MecanumDrive MD;
 
+    private IMU imu;
+
     @Override
     public void init() {
         this.FLM = new MotorEx(hardwareMap, "FLM");
@@ -29,6 +33,14 @@ public class teleop extends OpMode {
         this.RS = new MotorEx(hardwareMap, "RS");
 
         MD = new MecanumDrive(this.FLM, this.FRM, this.BLM, this.BRM);
+
+        this.imu = hardwareMap.get(IMU.class, "imu");
+
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+        // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
+        this.imu.initialize(parameters);
     }
 
     @Override
