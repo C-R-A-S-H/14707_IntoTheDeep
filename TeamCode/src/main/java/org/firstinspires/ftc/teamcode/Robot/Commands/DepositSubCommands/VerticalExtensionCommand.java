@@ -24,7 +24,7 @@ public class VerticalExtensionCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-       this.deposit.SetSlidePower(0);
+
        super.end(interrupted);
     }
 

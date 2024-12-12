@@ -17,10 +17,10 @@ public class DrivetrainTest extends OpMode {
     private MecanumDrive drive;
     @Override
     public void init() {
-        this.frontLeft = new MotorEx(hardwareMap,"frontLeft");
-        this.frontRight = new MotorEx(hardwareMap, "frontRight");
-        this.backLeft = new MotorEx(hardwareMap, "backLeft");
-        this.backRight = new MotorEx(hardwareMap, "backRight");
+        this.frontLeft = new MotorEx(hardwareMap,"FrontLeft");
+        this.frontRight = new MotorEx(hardwareMap, "FrontRight");
+        this.backLeft = new MotorEx(hardwareMap, "BackLeft");
+        this.backRight = new MotorEx(hardwareMap, "BackRight");
 
         this.imu = hardwareMap.get(IMU.class, "imu");
 

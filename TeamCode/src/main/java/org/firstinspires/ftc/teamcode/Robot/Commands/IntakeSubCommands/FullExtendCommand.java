@@ -19,27 +19,26 @@ public class FullExtendCommand extends CommandBase {
     @Override
     public void initialize() {
         this.intake.DropDown();
+        this.intake.SetPower(-2000);
     }
 
     @Override
     public void execute() {
         //ea = ll.getDistanceFromSample(ll.getColorData().get(0));
+
         this.intake.intakeState = IntakeState.EXTENDING;
         this.intake.SetSlidePos(Config.FullyExtendedSlideEncPos);
+
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        if (!interrupted){
-
-            this.intake.intakeState = IntakeState.EXTENDED;
-        }
-
         super.end(interrupted);
     }
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
+        return true; // this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
     }
 }

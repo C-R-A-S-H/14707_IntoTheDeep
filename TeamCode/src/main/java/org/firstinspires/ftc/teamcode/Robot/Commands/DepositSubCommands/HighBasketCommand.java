@@ -10,7 +10,7 @@ public class HighBasketCommand extends SequentialCommandGroup {
     private Deposit deposit;
     public HighBasketCommand(Deposit deposit){
         this.deposit = deposit;
-        addRequirements(this.deposit);
+
     }
     @Override
     public void initialize() {
