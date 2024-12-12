@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Mvmt.Movement;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.AnalogInput;
@@ -12,6 +13,7 @@ public class BlueNet extends OpMode {
     public DcMotorEx frontRight, frontLeft, backRight, backLeft;
     public AnalogInput otosX, otosY;
     private Movement mvm;
+    private Deposit depositSubsystem;
 
     @Override
     public void init() {
@@ -28,58 +30,85 @@ public class BlueNet extends OpMode {
         // Initialize Movement file
         mvm = new Movement(frontRight, frontLeft, backRight, backLeft, otosX, otosY);
 
+        // Initialize Deposit Subsystem
+        depositSubsystem = new Deposit(hardwareMap);
+
         // Reset encoders
         mvm.resetEncoders();
     }
 
     @Override
     public void start() {
-        // do Auto start stuff
-        mvm.moveForward(0.5, 32.4);
+        // start auto
+        mvm.moveForward(0.5, 32.4);  // F 2.7ft
         mvm.pause(200);
 
         mvm.turnLeft(0.3, 180);
         mvm.pause(500);
 
-        mvm.turnRight(0.3, 180);
+        //Clip preloaded spec
+        depositSubsystem.SetSlidePose(10);  // Set to desired position (Ex: 10 encoder ticks)
+        depositSubsystem.SetServoPoses(0.5, 0.5, 0.5);  // Set pivot positions (range 0 to 1)
+        depositSubsystem.ClawControl(0.8);  // Claw position (1 = open | 0 = close)
+        if (depositSubsystem.SlideAtPoint()) {
+            // Code to execute when the slide reaches the desired position
+        }
+
+
+        mvm.turnRight(0.3, -180);
         mvm.pause(500);
 
-        mvm.strafeLeft(0.5, 43.2);
+        mvm.strafeLeft(0.5, 43.2);  // SL 3.6ft
         mvm.pause(500);
+
+        //Intake to outtake
 
         mvm.turnLeft(0.3, 10);
         mvm.pause(500);
 
-        mvm.turnRight(0.3, 10);
+        // Push out to net
+
+        mvm.turnRight(0.3, -10);
         mvm.pause(500);
 
-        mvm.strafeLeft(0.5, 2.4);
+        mvm.strafeLeft(0.5, 2.4); // SL 0.2ft
         mvm.pause(500);
+
+        //Intake to outtake
 
         mvm.turnLeft(0.3, 7);
         mvm.pause(500);
 
-        mvm.turnRight(0.3, 7);
+        // Push out to net
+
+        mvm.turnRight(0.3, -7);
         mvm.pause(500);
 
-        mvm.strafeLeft(0.5, 3.0);
+        mvm.strafeLeft(0.5, 3.0); // SL 0.25ft
         mvm.pause(500);
 
-        mvm.strafeRight(0.5, 21.6);
+        //Intake to outtake
+
+        // Push out to net
+
+        mvm.strafeRight(0.5, 21.6);  // SR 1.8ft
         mvm.pause(500);
 
-        mvm.moveForward(0.5, 21.6);
+        mvm.moveForward(0.5, 21.6); //  F 1.8ft
         mvm.pause(500);
 
         mvm.turnLeft(0.3, 90);
         mvm.pause(500);
 
-        mvm.moveBackward(0.5, 3.6);
+        mvm.moveBackward(0.5, 3.6); //  B 0.3ft
         mvm.pause(500);
+
+        // Stick out and touch hang bar
     }
 
     @Override
     public void loop() {
+        depositSubsystem.periodic();
         if (mvm.motorsAreBusy()) {
             mvm.performPIDAdjustment();
         } else {
