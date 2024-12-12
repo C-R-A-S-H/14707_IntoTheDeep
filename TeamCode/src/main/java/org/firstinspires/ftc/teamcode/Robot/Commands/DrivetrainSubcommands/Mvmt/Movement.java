@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Mvmt;
-import org.firstinspires.ftc.teamcode.Robot.Subsystems.*;
+//import org.firstinspires.ftc.teamcode.Robot.Subsystems.*;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 public class Movement extends CommandBase {
@@ -10,20 +11,15 @@ public class Movement extends CommandBase {
     public DcMotorEx frontRight, frontLeft, backRight, backLeft;
     public PIDController pidController;
 
-    private static final double KP = 0.001;
-    private static final double KI = 0;
-    private static final double KD = 0;
-
     private static final double CPR = 537.6; //Counts per revolution
     private static final double WDI = 4.0; // Wheel Diamater in inches
     private static final double CPI = CPR / (WDI * Math.PI); // Counts per inch
 
-    private int FLtarg, FRtarg, BLtarg, BRtarg;
+    public int FLtarg, FRtarg, BLtarg, BRtarg;
     private double Powertarg;
 
-    public Movement(DcMotorEx frontLeft, DcMotorEx frontRight, DcMotorEx backLeft, DcMotorEx backRight) {
+    public Movement() {
     }
-
 
     public void moveForward(double power, double inches) {
         startMove(power, inches, inches, inches, inches);
@@ -64,8 +60,24 @@ public class Movement extends CommandBase {
         setMotorPowers(Powertarg);
     }
 
-    public void pause(double milliseconds) {
-        long pauseEndTime = System.currentTimeMillis() + (long) milliseconds;
+
+    // Idle method, stops bot freom doing anything at all
+    private void idle() {
+        // empty loop, keeps program running
+        try {
+            Thread.sleep(1);  // small sleep
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();  // Handles exception
+        }
+    }
+
+    // custom sleep method, since sleep is only in LinearOpMode
+    public void pause(long milliseconds) {
+        ElapsedTime timer = new ElapsedTime();
+        while (timer.milliseconds() < milliseconds) {
+            // Keeps bot in loop for time in ms, makes it do nothing for that time
+            idle();
+        }
     }
 
     public void performPIDAdjustment() {
