@@ -42,11 +42,8 @@ public class Drivetrain extends PedrioSubsystem {
         this.BrMotor = new MotorEx(hmap,"BackRight");
 
         this.follower = new Follower(hmap);
-
-
-
-
     }
+
     public MecanumDrive drive = new MecanumDrive(this.FlMotor, this.FrMotor, this.BlMotor, this.BrMotor);
 
 

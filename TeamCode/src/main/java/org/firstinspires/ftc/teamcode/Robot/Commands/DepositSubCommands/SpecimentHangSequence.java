@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands;
 
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
 public class SpecimentHangSequence extends SequentialCommandGroup {
