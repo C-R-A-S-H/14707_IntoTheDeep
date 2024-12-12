@@ -32,8 +32,9 @@ public class Drivetrain extends PedrioSubsystem {
     private MotorEx BlMotor;
     private MotorEx BrMotor;
 
+    public MecanumDrive drive;
 
-    public Follower follower;
+   public Follower follower;
 
     public Drivetrain(HardwareMap hmap){
         this.FlMotor = new MotorEx(hmap,"FrontLeft");
@@ -41,13 +42,14 @@ public class Drivetrain extends PedrioSubsystem {
         this.BlMotor = new MotorEx(hmap,"BackLeft");
         this.BrMotor = new MotorEx(hmap,"BackRight");
 
+        this.drive = new MecanumDrive(this.FlMotor,this.FrMotor,this.BlMotor,this.BrMotor);
         this.follower = new Follower(hmap);
 
 
 
 
     }
-    public MecanumDrive drive = new MecanumDrive(this.FlMotor, this.FrMotor, this.BlMotor, this.BrMotor);
+
 
 
     //public final SparkFunOTOS myOtos = robot.otos;
@@ -122,7 +124,6 @@ public class Drivetrain extends PedrioSubsystem {
 
     @Override
     public void init() {
-
     }
 
     @Override

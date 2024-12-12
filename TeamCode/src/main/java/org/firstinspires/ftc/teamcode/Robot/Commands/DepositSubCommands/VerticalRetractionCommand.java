@@ -7,12 +7,11 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
 public class VerticalRetractionCommand extends CommandBase {
     private Deposit deposit;
-    private MagLimitSwitch magLimitSwitch;
 
-    public VerticalRetractionCommand(Deposit deposit, MagLimitSwitch magLimitSwitch){
+
+    public VerticalRetractionCommand(Deposit deposit){
         this.deposit = deposit;
-        this.magLimitSwitch = magLimitSwitch;
-        addRequirements(this.deposit);
+
     }
 
     @Override
@@ -22,22 +21,17 @@ public class VerticalRetractionCommand extends CommandBase {
 
     @Override
     public void execute() {
-        if(this.deposit.AverageSlideEncoderPose < 300){
-            this.deposit.SetSlidePower(-0.3);
-
-        }else{
-            this.deposit.SetSlidePower(-0.7);
-        }
+        this.deposit.SetSlidePose(-20);
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.deposit.SetSlidePower(0);
+        this.deposit.SetSlidePower(-0.2);
         this.deposit.resetSlideEncoders();
     }
 
     @Override
     public boolean isFinished() {
-        return this.magLimitSwitch.getAtLimit();
+        return this.deposit.AverageSlideEncoderPose < 0;
     }
 }

@@ -10,7 +10,7 @@ public class PreScoreCommand extends SequentialCommandGroup {
     private Deposit deposit;
     public PreScoreCommand(Deposit deposit){
         this.deposit = deposit;
-        addRequirements(this.deposit);
+
     }
     @Override
     public void initialize() {

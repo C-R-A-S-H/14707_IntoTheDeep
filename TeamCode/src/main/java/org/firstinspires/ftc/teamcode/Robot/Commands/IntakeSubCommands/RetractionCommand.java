@@ -16,29 +16,25 @@ public class RetractionCommand extends CommandBase {
     @Override
     public void initialize() {
         this.intake.IntakeUp();
-        this.intake.SetPower(-2000);
+
     }
 
     @Override
     public void execute() {
-        this.intake.intakeState = IntakeState.RETRACTING;
+
+       // this.intake.intakeState = IntakeState.RETRACTING;
         this.intake.SetSlidePos(Config.RetractedSlideEncPos);
 
     }
 
     @Override
     public void end(boolean interrupted) {
-
-        this.intake.IntakeUp();
-        this.intake.SetPower(-2000);
-        if (!interrupted){
-            this.intake.resetEncoders();
-        }
+        this.intake.setSlidePower(-.6);
 
     }
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(this.intake.HorizontalEncTicks, Config.RetractedSlideEncPos - 3,Config.RetractedSlideEncPos + 3);
+        return this.intake.tolerance(this.intake.HorizontalEncTicks, Config.RetractedSlideEncPos - 1,Config.RetractedSlideEncPos + 1);
     }
 }

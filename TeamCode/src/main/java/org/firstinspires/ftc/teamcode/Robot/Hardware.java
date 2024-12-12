@@ -61,16 +61,16 @@ public class Hardware {
         //this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
         //this.intakeBeamBreak = new BeamBreak(hmap,"intakeBeamBreak");
-        this.transferColorSensor = hmap.get(NormalizedColorSensor.class, "transferColorSensor");
+        //this.transferColorSensor = hmap.get(NormalizedColorSensor.class, "transferColorSensor");
 
         //this.horizontalLimitSwitch = new MagLimitSwitch(hmap,"horizontalLimitLimitSwitch");
         //this.verticalLimitSwitch = new MagLimitSwitch(hmap,"verticalLimitSwitch");
 
-        this.drivetrain = new Drivetrain(hmap);
+        //this.drivetrain = new Drivetrain(hmap);
         this.intake = new Intake(hmap);
         this.deposit = new Deposit(hmap);
 
-        this.subsystems.add(this.drivetrain);
+        //this.subsystems.add(this.drivetrain);
         this.subsystems.add(this.intake);
         this.subsystems.add(this.deposit);
 
@@ -85,13 +85,13 @@ public class Hardware {
 
          */
 
-        for(PedrioSubsystem Subsystem : subsystems){
+        for(PedrioSubsystem Subsystem : this.subsystems){
             Subsystem.init();
         }
 
     }
     public void Loop(){
-        for(PedrioSubsystem Subsystem : subsystems){
+        for(PedrioSubsystem Subsystem : this.subsystems){
             Subsystem.periodic();
         }
     }

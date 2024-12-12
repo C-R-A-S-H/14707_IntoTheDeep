@@ -36,14 +36,10 @@ public class UpSlidesTest extends OpMode {
             setpoint = 0;
         }
         double pose = (this.SlideA.getCurrentPosition() + this.SlideB.getCurrentPosition()) / 2;
-        double power = pid.calculate(pose, setpoint);
-        //this.SlideA.set(gamepad1.left_stick_y);
-        //this.SlideB.set(gamepad1.left_stick_y);
-        if(power < -0.1){
-            power *= 0.2;
-        }
-        this.SlideA.set(power);
-        this.SlideB.set(power);
+        //double power = pid.calculate(pose, setpoint);
+        this.SlideA.set(gamepad1.left_stick_y);
+        this.SlideB.set(gamepad1.left_stick_y);
+
 
 
 

@@ -33,7 +33,7 @@ public class TeleopIntakeCommand extends SequentialCommandGroup {
     @Override
     public void end(boolean interrupted) {
         addCommands(
-                new RetractionCommand(this.intake, this.magLimitSwitch)
+                new RetractionCommand(this.intake)
         );
     }
 

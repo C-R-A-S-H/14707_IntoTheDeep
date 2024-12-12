@@ -10,10 +10,9 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 
 public class ScoreCommand extends SequentialCommandGroup {
     private Deposit deposit;
-    private MagLimitSwitch magLimitSwitch;
-    public ScoreCommand(Deposit deposit, MagLimitSwitch magLimitSwitch){
+    public ScoreCommand(Deposit deposit){
         this.deposit = deposit;
-        this.magLimitSwitch = magLimitSwitch;
+
         addRequirements(this.deposit);
     }
     @Override
@@ -23,7 +22,7 @@ public class ScoreCommand extends SequentialCommandGroup {
                 new WaitCommand(300),
                 new DepositPivotingCommand(this.deposit,Config.LeftATransferPose, Config.RightATransferPose, Config.ClawPivotTransferPose),
                 new WaitCommand(200),
-                new VerticalRetractionCommand(this.deposit,this.magLimitSwitch)
+                new VerticalRetractionCommand(this.deposit)
         );
     }
 

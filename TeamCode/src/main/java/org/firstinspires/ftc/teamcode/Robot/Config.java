@@ -23,7 +23,7 @@ public class Config {
     public static double HorizontalSlideTicksToInches = 10.3;
 
     //pid controllers and ff
-    public static PIDController HorizontalController = new PIDController(0.3, 0, 0);
+    public static PIDController HorizontalController = new PIDController(0.04, 0, 0);
     public static PIDController VerticalController = new PIDController(0.001, 0, 0);
 
     public static double HorizontalSlideFF = -0.1;
@@ -36,16 +36,17 @@ public class Config {
     public static double IntakeUpPoseLeft = 0;
     public static double IntakeUpPoseRight = 0;
 
-    public static double FullyExtendedSlideEncPos = 900;
+    public static double FullyExtendedSlideEncPos = 100;
     public static double HalfExtendedSlideEncPos = 500;
-    public static double RetractedSlideEncPos = -50;
+    public static double RetractedSlideEncPos = 0;
 
-    public static double LeftATransferPose = 0;
-    public static double RightATransferPose = 0;
+    public static double LeftATransferPose = 0.4; //1
+    public static double RightATransferPose = 0.25; //0.85
+
     public static double LeftAScoreBasketPose = 0;
     public static double RightAScoreBasketPose = 0;
 
-    public static double ClawPivotTransferPose = 0;
+    public static double ClawPivotTransferPose = 1;
     public static double ClawPivotScoreBasketPose = 0;
 
     public static double ClawClosePose = 0;

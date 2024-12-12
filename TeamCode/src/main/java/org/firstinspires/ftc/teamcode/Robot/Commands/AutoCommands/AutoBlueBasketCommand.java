@@ -57,7 +57,7 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
                                 new Point(40.741, 76.800, Point.CARTESIAN)
                         ), this.dt)
                 ,new WaitCommand(100),
-                new ScoreCommand(this.deposit, this.verticalMagSwitch)
+                new ScoreCommand(this.deposit)
 
 
         );

@@ -11,19 +11,21 @@ public class TransferCommand extends SequentialCommandGroup {
     Deposit deposit;
     public TransferCommand(Deposit deposit){
         this.deposit = deposit;
-        addRequirements(this.deposit);
+
     }
     @Override
     public void initialize() {
-        addCommands(
-                new InstantCommand( () -> this.deposit.ClawControl(Config.ClawClosePose)),
-                new WaitCommand(200)
-        );
+        //SetServoPoses(1,.85,1); transfer
+
     }
 
     @Override
     public void execute() {
-        super.execute();
+        addCommands(
+                new DepositPivotingCommand(this.deposit,1,.85,1),
+                new InstantCommand( () -> this.deposit.ClawControl(Config.ClawClosePose)),
+                new WaitCommand(200)
+        );
     }
 
     @Override

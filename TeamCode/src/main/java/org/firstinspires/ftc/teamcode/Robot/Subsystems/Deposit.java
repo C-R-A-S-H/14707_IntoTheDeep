@@ -38,7 +38,13 @@ public class Deposit extends PedrioSubsystem {
         this.DepositClaw = hmap.get(Servo.class,"DepositClaw");
         this.DepositPivot1Left = hmap.get(Servo.class,"DepositPivot1Left");
         this.DepositPivot1Right = hmap.get(Servo.class,"DepositPivot1Right");
+
+        this.DepositPivot1Left.setDirection(Servo.Direction.FORWARD);
+        this.DepositPivot1Right.setDirection(Servo.Direction.REVERSE);
         this.DepositPivot2 = hmap.get(Servo.class,"DepositPivot2");
+
+        this.LeftVSlide.setInverted(true);
+        this.RightVSlide.setInverted(true);
     }
 
     public void SetSlidePower(double WantedPower) {
@@ -49,14 +55,9 @@ public class Deposit extends PedrioSubsystem {
 
     public void SetSlidePose(double WantedPos) {
         double PositionAverage = (double) (this.LeftVSlide.getCurrentPosition() + this.RightVSlide.getCurrentPosition()) / 2;
-        double Value = Config.VerticalController.calculate(WantedPos, PositionAverage);
-        double FF = Config.VerticalSlideFF;
+        double Value = Config.VerticalController.calculate(PositionAverage, WantedPos);
 
-        if(depositStates == DepositStates.Retracting){
-         FF  = -FF;
-        }
-
-        SetSlidePower(Value + FF);
+        SetSlidePower(Value);
     }
     
     public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){
