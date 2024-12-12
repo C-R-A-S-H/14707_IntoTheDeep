@@ -1,100 +1,40 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Mvmt;
-//import org.firstinspires.ftc.teamcode.Robot.Subsystems.*;
+
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 
 public class Movement {
 
-    public DcMotorEx frontRight, frontLeft, backRight, backLeft;
-    public PIDController pidController;
+    private final DcMotorEx frontRight;
+    private final DcMotorEx frontLeft;
+    private final DcMotorEx backRight;
+    private final DcMotorEx backLeft;
+    private final AnalogInput otosX;
+    private final AnalogInput otosY;
+    private final PIDController pidController;
 
-    private static final double CPR = 537.6; //Counts per revolution
-    private static final double WDI = 4.0; // Wheel Diamater in inches
-    private static final double CPI = CPR / (WDI * Math.PI); // Counts per inch
+    private double startX, startY; // Starting OTOS readings
+    private double currentX, currentY;
 
-    public int FLtarg, FRtarg, BLtarg, BRtarg;
-    private double Powertarg;
+    private static final double VOLTS_TO_INCHES = 1.0; // Conversion factor for OTOS voltage to inches (NEEDS ADJUSTMENT)
 
-    public Movement() {
-    }
+    public int FLtarg, FRtarg, BLtarg, BRtarg; // Encoder target positions
 
-    public void moveForward(double power, double inches) {
-        startMove(power, inches, inches, inches, inches);
-    }
+    public Movement(DcMotorEx fr, DcMotorEx fl, DcMotorEx br, DcMotorEx bl, AnalogInput xSensor, AnalogInput ySensor) {
+        frontRight = fr;
+        frontLeft = fl;
+        backRight = br;
+        backLeft = bl;
 
-    public void moveBackward(double power, double inches) {
-        startMove(power, -inches, -inches, -inches, -inches);
-    }
+        otosX = xSensor;
+        otosY = ySensor;
 
-    public void strafeLeft(double power, double inches) {
-        startMove(power, -inches, inches, inches, -inches);
-    }
+        pidController = new PIDController(0.001, 0.00, 0.00); // Adjustments needed
 
-    public void strafeRight(double power, double inches) {
-        startMove(power, inches, -inches, -inches, inches);
-    }
-
-    public void turnRight(double power, double degrees) {
-        double turnInches = degrees / 360 * (Math.PI * WDI);
-        startMove(power, -turnInches, turnInches, -turnInches, turnInches);
-    }
-
-    public void turnLeft(double power, double degrees) {
-        double turnInches = degrees / 360 * (Math.PI * WDI);
-        startMove(power, turnInches, -turnInches, turnInches, -turnInches);
-    }
-
-    private void startMove(double power, double frontLeftInches, double frontRightInches, double backLeftInches, double backRightInches) {
-        FLtarg = frontLeft.getCurrentPosition() + (int) (frontLeftInches * CPI);
-        FRtarg = frontRight.getCurrentPosition() + (int) (frontRightInches * CPI);
-        BLtarg = backLeft.getCurrentPosition() + (int) (backLeftInches * CPI);
-        BRtarg = backRight.getCurrentPosition() + (int) (backRightInches * CPI);
-
-        setTargetPositions();
-        runToPositionMode();
-
-        Powertarg = power;
-        setMotorPowers(Powertarg);
-    }
-
-
-    // Idle method, stops bot freom doing anything at all
-    private void idle() {
-        // empty loop, keeps program running
-        try {
-            Thread.sleep(1);  // small sleep
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();  // Handles exception
-        }
-    }
-
-    // custom sleep method, since sleep is only in LinearOpMode
-    public void pause(long milliseconds) {
-        ElapsedTime timer = new ElapsedTime();
-        while (timer.milliseconds() < milliseconds) {
-            // Keeps bot in loop for time in ms, makes it do nothing for that time
-            idle();
-        }
-    }
-
-    public void performPIDAdjustment() {
-        int currentPos = (frontLeft.getCurrentPosition() + frontRight.getCurrentPosition() + backLeft.getCurrentPosition() + backRight.getCurrentPosition()) / 4;
-        int targetPos = (FLtarg + FRtarg + BLtarg + BRtarg) / 4;
-        double error = targetPos - currentPos;
-        double correction = pidController.calculate(error);
-
-        setMotorPowers(Powertarg + correction);
-    }
-
-    public boolean motorsAreBusy() {
-        return frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy();
-    }
-
-    public void stopMotors() {
-        setMotorPowers(0);
-        runUsingEncoders();
+        resetEncoders();
+        resetOdometry();
     }
 
     public void resetEncoders() {
@@ -102,33 +42,138 @@ public class Movement {
         frontLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
     }
 
-    private void setTargetPositions() {
+    public void resetOdometry() {
+        startX = otosX.getVoltage();
+        startY = otosY.getVoltage();
+    }
+
+    public void moveForward(double power, double inches) {
+        move(power, inches, 0);
+    }
+
+    public void moveBackward(double power, double inches) {
+        move(-power, -inches, 0);
+    }
+
+    public void strafeLeft(double power, double inches) {
+        move(power, 0, -inches);
+    }
+
+    public void strafeRight(double power, double inches) {
+        move(power, 0, inches);
+    }
+
+    public void turnLeft(double power, double degrees) {
+        turn(power, degrees);
+    }
+
+    public void turnRight(double power, double degrees) {
+        turn(-power, -degrees);
+    }
+
+    private void turn(double power, double degrees) {
+        int ticks = (int) (degreesToTicks(degrees));
+
+        FLtarg += ticks;
+        FRtarg -= ticks;
+        BLtarg += ticks;
+        BRtarg -= ticks;
+
+        setMotorTargets();
+        setMotorPowers(power, -power);
+    }
+
+    public void move(double power, double targetInchesX, double targetInchesY) {
+        double targetX = startX + (targetInchesX / VOLTS_TO_INCHES);
+        double targetY = startY + (targetInchesY / VOLTS_TO_INCHES);
+
+        do {
+            currentX = otosX.getVoltage();
+            currentY = otosY.getVoltage();
+
+            double errorX = targetX - currentX;
+            double errorY = targetY - currentY;
+
+            double correctionX = pidController.calculate(errorX);
+            double correctionY = pidController.calculate(errorY);
+
+            double leftPower = power + correctionY - correctionX;
+            double rightPower = power + correctionY + correctionX;
+
+            setMotorPowers(leftPower, rightPower);
+
+        } while (Math.abs(targetX - currentX) > 0.1 || Math.abs(targetY - currentY) > 0.1);
+
+        stopMotors();
+    }
+
+    public void stopMotors() {
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
+
+    public void setMotorPowers(double leftPower, double rightPower) {
+        frontLeft.setPower(leftPower);
+        backLeft.setPower(leftPower);
+        frontRight.setPower(rightPower);
+        backRight.setPower(rightPower);
+    }
+
+    public void setMotorTargets() {
         frontLeft.setTargetPosition(FLtarg);
         frontRight.setTargetPosition(FRtarg);
         backLeft.setTargetPosition(BLtarg);
         backRight.setTargetPosition(BRtarg);
     }
 
-    private void runToPositionMode() {
-        frontLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+    public boolean motorsAreBusy() {
+        return frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy();
     }
 
-    private void runUsingEncoders() {
-        frontLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    public void performPIDAdjustment() {
+        // get average error(s) for all of the motors
+        int avgError = (Math.abs(frontLeft.getTargetPosition() - frontLeft.getCurrentPosition()) +
+                Math.abs(frontRight.getTargetPosition() - frontRight.getCurrentPosition()) +
+                Math.abs(backLeft.getTargetPosition() - backLeft.getCurrentPosition()) +
+                Math.abs(backRight.getTargetPosition() - backRight.getCurrentPosition())) / 4;
+
+        // get adjustment value
+        double adjustment = pidController.calculate(avgError);
+
+        // adjust the motors properly
+        frontLeft.setPower(frontLeft.getPower() + adjustment);
+        frontRight.setPower(frontRight.getPower() + adjustment);
+        backLeft.setPower(backLeft.getPower() + adjustment);
+        backRight.setPower(backRight.getPower() + adjustment);
     }
 
-    private void setMotorPowers(double power) {
-        frontLeft.setPower(power);
-        frontRight.setPower(power);
-        backLeft.setPower(power);
-        backRight.setPower(power);
+    public void pause(long milliseconds) {
+        ElapsedTime timer = new ElapsedTime();
+        while (timer.milliseconds() < milliseconds) {
+            idle();
+        }
+    }
+
+    private void idle() {
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private double degreesToTicks(double degrees) {
+        final double TICKS_PER_REV = 1120; // Example value, adjust for your motor
+        final double DEGREES_PER_REV = 360.0;
+        return (degrees / DEGREES_PER_REV) * TICKS_PER_REV;
     }
 }
