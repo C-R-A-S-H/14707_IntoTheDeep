@@ -5,9 +5,6 @@ import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Mvmt.
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.arcrobotics.ftclib.controller.PIDController;
-import com.arcrobotics.ftclib.command.*;
-import org.firstinspires.ftc.teamcode.Robot.Commands.*;
-import org.firstinspires.ftc.teamcode.Robot.Subsystems.*;
 
 @Autonomous(name = "BlueNet AUTO", group = "Blue")
 public class BlueNet extends OpMode {
