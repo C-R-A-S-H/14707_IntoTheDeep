@@ -6,6 +6,11 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Deposit;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.IntakeActivationCommand;
+import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.FullExtendCommand;
+import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.RetractionCommand;
+import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 @Autonomous(name = "BlueNet", group = "Blue")
 public class BlueNet extends OpMode {
@@ -14,6 +19,9 @@ public class BlueNet extends OpMode {
     public AnalogInput otosX, otosY;
     private Movement mvm;
     private Deposit depositSubsystem;
+    private Intake intakeSubsystem;
+    private NormalizedColorSensor transferColorSensor;
+    private IntakeActivationCommand iC;
 
     @Override
     public void init() {
@@ -32,6 +40,11 @@ public class BlueNet extends OpMode {
 
         // Initialize Deposit Subsystem
         depositSubsystem = new Deposit(hardwareMap);
+
+        // Initialize Intake Subsystem + Transfer Color Sensor
+        intakeSubsystem = new Intake(hardwareMap);
+        transferColorSensor = hardwareMap.get(NormalizedColorSensor.class, "TransferColorSensor");
+        iC = new IntakeActivationCommand(intakeSubsystem, transferColorSensor);
 
         // Reset encoders
         mvm.resetEncoders();
@@ -61,7 +74,20 @@ public class BlueNet extends OpMode {
         mvm.strafeLeft(0.5, 43.2);  // SL 3.6ft
         mvm.pause(500);
 
-        //Intake to outtake
+        //-----------------------------------------------intake to outtake------------------------------------------------
+        // Extend intake slides
+        new FullExtendCommand(intakeSubsystem).initialize();
+        mvm.pause(500);
+        // Start Intake motor
+        iC.initialize();
+        iC.execute();
+        // Check if specimen is fully taken in
+        if (iC.checkForSample()) {
+            // Stop intake motor
+            iC.end(false); // False to show it isn't interrupted
+            // retract intake slides
+            new RetractionCommand(intakeSubsystem).initialize();        }
+        //-----------------------------------------------intake to outtake------------------------------------------------
 
         mvm.turnLeft(0.3, 10);
         mvm.pause(500);
