@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Mvmt;
 //import org.firstinspires.ftc.teamcode.Robot.Subsystems.*;
-import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-public class Movement extends CommandBase {
+public class Movement {
 
     public DcMotorEx frontRight, frontLeft, backRight, backLeft;
     public PIDController pidController;
