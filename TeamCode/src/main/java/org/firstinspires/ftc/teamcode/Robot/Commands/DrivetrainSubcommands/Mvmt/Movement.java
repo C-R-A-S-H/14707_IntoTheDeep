@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class Movement extends CommandBase {
 
-    private DcMotorEx frontRight, frontLeft, backRight, backLeft;
-    private PIDController pidController;
+    public DcMotorEx frontRight, frontLeft, backRight, backLeft;
+    public PIDController pidController;
 
     private static final double KP = 0.001;
     private static final double KI = 0;
