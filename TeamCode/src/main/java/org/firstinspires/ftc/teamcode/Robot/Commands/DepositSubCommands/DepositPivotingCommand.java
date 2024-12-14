@@ -14,7 +14,7 @@ public class DepositPivotingCommand extends CommandBase {
         this.PivotARight = PivotARight;
         this.PivotB = PivotB;
         this.deposit = deposit;
-        addRequirements(this.deposit);
+
     }
 
     @Override
