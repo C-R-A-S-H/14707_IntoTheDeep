@@ -38,10 +38,10 @@ public class Config {
 
     public static double FullyExtendedSlideEncPos = 100;
     public static double HalfExtendedSlideEncPos = 500;
-    public static double RetractedSlideEncPos = 0;
+    public static double RetractedSlideEncPos = -50;
 
     public static double LeftATransferPose = 0.4; //1
-    public static double RightATransferPose = 0.25; //0.85
+    public static double RightATransferPose = 0.4; //0.85
 
     public static double LeftAScoreBasketPose = 0;
     public static double RightAScoreBasketPose = 0;
