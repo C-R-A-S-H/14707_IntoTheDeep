@@ -10,7 +10,7 @@ public class VerticalExtensionCommand extends CommandBase {
     public VerticalExtensionCommand(Deposit deposit, double pose){
         this.deposit = deposit;
         this.pose = pose;
-        addRequirements(this.deposit);
+
     }
     @Override
     public void initialize() {

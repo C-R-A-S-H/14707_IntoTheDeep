@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Robot.Opmodes.Auto;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -75,14 +76,15 @@ public class RedSpeciment extends OpMode {
     public void scheduleCommands(){
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new SillyFollowPathCommand(
+                       new SillyFollowPathCommand(
                                 this.robot.drivetrain,this.scorePreload,true
-                        ).alongWith(
-                                new VerticalExtensionCommand(this.robot.deposit,400),
-                                new DepositPivotingCommand(this.robot.deposit, 1,1,0)
-                        ),
+                       ),
+                        new VerticalExtensionCommand(this.robot.deposit,400),
+                        new DepositPivotingCommand(this.robot.deposit, 1,1,0),
+                        new WaitCommand(500),
                         new VerticalExtensionCommand(this.robot.deposit, 0),
                         new InstantCommand(() -> this.robot.deposit.ClawControl(0))
+
                 )
 
         );

@@ -63,17 +63,15 @@ public class NonAutoTeleop extends OpMode {
 
     public void createBindings(){
       //Button class
-        Button intake = new GamepadButton(driver2, GamepadKeys.Button.A).whenHeld(
+        Button intake = new GamepadButton(driver2, GamepadKeys.Button.A).toggleWhenPressed(
                 new SequentialCommandGroup(
                 new InstantCommand(() -> this.robot.intake.DropDown()),
                 new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(-2000))
-                )
-        ).whenReleased(
+                ),
                 new SequentialCommandGroup(
                         new InstantCommand(() -> this.robot.intake.IntakeUp()),
                         new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(-2000))
                 )
-
         );
 
         Button highBasket = new GamepadButton(driver2, GamepadKeys.Button.B).toggleWhenPressed(
