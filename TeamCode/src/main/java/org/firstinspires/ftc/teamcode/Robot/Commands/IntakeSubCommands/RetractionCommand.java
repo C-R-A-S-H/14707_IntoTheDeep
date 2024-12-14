@@ -29,12 +29,12 @@ public class RetractionCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.setSlidePower(-.6);
+        this.intake.setSlidePower(-.3);
 
     }
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(this.intake.HorizontalEncTicks, Config.RetractedSlideEncPos - 1,Config.RetractedSlideEncPos + 1);
+        return this.intake.tolerance(this.intake.GetSlidePos(), Config.RetractedSlideEncPos - 1,Config.RetractedSlideEncPos + 1);
     }
 }

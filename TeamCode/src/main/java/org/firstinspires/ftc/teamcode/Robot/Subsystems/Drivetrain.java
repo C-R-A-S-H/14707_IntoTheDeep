@@ -27,22 +27,12 @@ public class Drivetrain extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
 
 
-    private MotorEx FlMotor;
-    private MotorEx FrMotor;
-    private MotorEx BlMotor;
-    private MotorEx BrMotor;
 
-    public MecanumDrive drive;
 
    public Follower follower;
 
     public Drivetrain(HardwareMap hmap){
-        this.FlMotor = new MotorEx(hmap,"FrontLeft");
-        this.FrMotor = new MotorEx(hmap,"FrontRight");
-        this.BlMotor = new MotorEx(hmap,"BackLeft");
-        this.BrMotor = new MotorEx(hmap,"BackRight");
 
-        this.drive = new MecanumDrive(this.FlMotor,this.FrMotor,this.BlMotor,this.BrMotor);
         this.follower = new Follower(hmap);
 
 
@@ -106,13 +96,6 @@ public class Drivetrain extends PedrioSubsystem {
     //public SparkFunOTOS.Pose2D getVelocity(){
     //    return myOtos.getVelocity();
   //  }
-
-    public void driveFieldCentric(double x, double y, double turn, double gyroAngle) {
-        drive.driveFieldCentric(x, y, turn, gyroAngle);
-    }
-    public void driveRobotCentric(double x, double y, double turn){
-        drive.driveRobotCentric(x,y,turn);
-    }
 
 
     //public SparkFunOTOS.Pose2D getPose() {

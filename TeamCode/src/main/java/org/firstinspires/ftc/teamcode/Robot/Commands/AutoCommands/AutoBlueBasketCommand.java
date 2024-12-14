@@ -31,13 +31,11 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
     private NormalizedColorSensor colorSensor;
     private LimeLightHelper ll;
 
-    public AutoBlueBasketCommand(Drivetrain dt, Intake intake, Deposit deposit, MagLimitSwitch verticalMagSwitch, NormalizedColorSensor colorSensor, LimeLightHelper ll, Command... commands) {
+    public AutoBlueBasketCommand(Drivetrain dt, Intake intake, Deposit deposit) {
         this.dt = dt;
         this.intake = intake;
         this.deposit = deposit;
-        this.verticalMagSwitch = verticalMagSwitch;
-        this.colorSensor = colorSensor;
-        this.ll = ll;
+
     }
 
     @Override
@@ -48,16 +46,19 @@ public class AutoBlueBasketCommand extends SequentialCommandGroup {
                         // start to pre score speciment
                         new Point(7.024, 80.078, Point.CARTESIAN),
                         new Point(21.307, 80.078, Point.CARTESIAN),
-                        new Point(34.654, 76.800, Point.CARTESIAN)),this.dt).alongWith(
-                            new PreScoreCommand(this.deposit)
-                ),
+                        new Point(34.654, 76.800, Point.CARTESIAN)),this.dt)
+                        //.alongWith(
+                         //   new PreScoreCommand(this.deposit)
+               // )
+                ,
                 new FollowPathCommand( // after pre score moving to the bar score after
                         new BezierLine(
                                 new Point(34.654, 76.800, Point.CARTESIAN),
                                 new Point(40.741, 76.800, Point.CARTESIAN)
                         ), this.dt)
-                ,new WaitCommand(100),
-                new ScoreCommand(this.deposit)
+                ,new WaitCommand(100)
+                //,
+                //new ScoreCommand(this.deposit)
 
 
         );

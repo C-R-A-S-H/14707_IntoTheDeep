@@ -32,7 +32,6 @@ public class Hardware {
 
     public Limelight3A limelight3A;
 
-    public Follower follower;
 
     //public BeamBreak intakeBeamBreak;
     public NormalizedColorSensor transferColorSensor;
@@ -66,11 +65,11 @@ public class Hardware {
         //this.horizontalLimitSwitch = new MagLimitSwitch(hmap,"horizontalLimitLimitSwitch");
         //this.verticalLimitSwitch = new MagLimitSwitch(hmap,"verticalLimitSwitch");
 
-        //this.drivetrain = new Drivetrain(hmap);
+        this.drivetrain = new Drivetrain(hmap);
         this.intake = new Intake(hmap);
         this.deposit = new Deposit(hmap);
 
-        //this.subsystems.add(this.drivetrain);
+        this.subsystems.add(this.drivetrain);
         this.subsystems.add(this.intake);
         this.subsystems.add(this.deposit);
 

@@ -82,7 +82,9 @@ public class Intake extends PedrioSubsystem {
         this.HsSlide.set(Value + FF);
 
     }
-
+    public double GetSlidePos(){
+        return this.HsSlide.getCurrentPosition();
+    }
     public void resetEncoders(){
         this.HsSlide.resetEncoder();
     }

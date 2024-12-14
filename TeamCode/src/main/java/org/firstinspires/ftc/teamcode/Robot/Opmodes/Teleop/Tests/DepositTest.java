@@ -23,10 +23,10 @@ public class DepositTest extends OpMode {
     @Override
     public void loop() {
         if(gamepad1.a){
-            SetServoPoses(0,0,1);
+            SetServoPoses(0,0,1); //picking up pose 0 0 1
         }
         if (gamepad1.b) {
-            SetServoPoses(1,.85,0);
+            SetServoPoses(1,1,0); // 1 1 0
         }
 
 
