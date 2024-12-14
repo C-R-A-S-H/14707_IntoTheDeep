@@ -78,7 +78,7 @@ public class RedSpeciment extends OpMode {
                 new SequentialCommandGroup(
                        new SillyFollowPathCommand(
                                 this.robot.drivetrain,this.scorePreload,true
-                       ),-
+                       ),
                         new VerticalExtensionCommand(this.robot.deposit,400),
                         new DepositPivotingCommand(this.robot.deposit, 1,1,0),
                         new WaitCommand(500),
