@@ -35,6 +35,9 @@ public class Deposit extends PedrioSubsystem {
         this.LeftVSlide = new MotorEx(hmap, "LeftVSlide");
         this.RightVSlide = new MotorEx(hmap,"RightVSlide");
 
+        this.LeftVSlide.setInverted(true);
+        this.RightVSlide.setInverted(true);
+
         this.DepositClaw = hmap.get(Servo.class,"DepositClaw");
         this.DepositPivot1Left = hmap.get(Servo.class,"DepositPivot1Left");
         this.DepositPivot1Right = hmap.get(Servo.class,"DepositPivot1Right");
@@ -70,8 +73,8 @@ public class Deposit extends PedrioSubsystem {
         this.DepositClaw.setPosition(claw);
     }
 
-    public boolean SlideAtPoint(){
-        return tolerance(averageError(LeftSlidePose, RightSlidePose), -5,5);
+    public boolean SlideAtPoint(double pose){
+        return tolerance(averageError(this.LeftVSlide.getCurrentPosition(), RightVSlide.getCurrentPosition()), pose -2,pose + 2);
     }
     public void resetSlideEncoders(){
         this.LeftVSlide.resetEncoder();

@@ -51,6 +51,10 @@ public class Intake extends PedrioSubsystem {
         return this.HsSlide.motorEx.getCurrentAlert(CurrentUnit.AMPS);
     }
 
+    public void IntakeToAutoPose(){
+        this.DropDownLeft.setPosition(0.9);
+        this.DropDownRight.setPosition(0.9);
+    }
     public void DropDown() {
         this.DropDownLeft.setPosition(Config.DropDownPoseLeft);
         this.DropDownRight.setPosition(Config.DropDownPoseRight);
