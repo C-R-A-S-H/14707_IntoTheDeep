@@ -30,6 +30,6 @@ public class VerticalExtensionCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return this.deposit.SlideAtPoint();
+        return this.deposit.SlideAtPoint(this.pose);
     }
 }

@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 
 @Autonomous(name = "RedSpeciment")
-public class RedSpeciment extends OpMode {
+public class oneSpecPark extends OpMode {
     private Hardware robot = Hardware.getInstance();
 
     private Path scorePreload;
@@ -30,10 +30,14 @@ public class RedSpeciment extends OpMode {
         this.buildPaths();
 
         this.robot.deposit.ClawControl(.45);
-        this.robot.deposit.SetServoPoses(0.5,0.5,0.5 );
+
+
+
+        this.robot.intake.setSlidePower(-0.3);
 
         scheduleCommands();
     }
+
 
     @Override
     public void loop() {
@@ -48,25 +52,26 @@ public class RedSpeciment extends OpMode {
 
     public void buildPaths(){
         scorePreload = new Path(new BezierCurve(
-                new Point(136.374, 80.748, Point.CARTESIAN),
+                new Point(135.701, 81.869, Point.CARTESIAN),
                 new Point(120.673, 80.748, Point.CARTESIAN),
                 new Point(122.467, 73.794, Point.CARTESIAN),
-                new Point(103.402, 76.486, Point.CARTESIAN)
+                new Point(113.944, 73.570, Point.CARTESIAN)
+
         ));
 
         barToHuman = new Path( new BezierCurve(
-                new Point(103.402, 76.486, Point.CARTESIAN),
-                new Point(111.925, 120.000, Point.CARTESIAN),
-                new Point(135.477, 119.327, Point.CARTESIAN)
+                new Point(113.944, 74.019, Point.CARTESIAN),
+                new Point(133.234, 89.047, Point.CARTESIAN),
+                new Point(134.131, 118.879, Point.CARTESIAN)
         ));
 
         this.scorePreload.setReversed(true);
 
-        this.barToHuman.setReversed(true);
+        this.barToHuman.setReversed(false);
 
         this.robot.drivetrain.follower.pathBuilder().addPath(scorePreload).setReversed(true);
 
-        this.robot.drivetrain.follower.pathBuilder().addPath(barToHuman).setReversed(true);
+        this.robot.drivetrain.follower.pathBuilder().addPath(barToHuman).setReversed(false);
 
 
 
@@ -76,15 +81,26 @@ public class RedSpeciment extends OpMode {
     public void scheduleCommands(){
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
+
                        new SillyFollowPathCommand(
                                 this.robot.drivetrain,this.scorePreload,true
-                       ),
-                        new VerticalExtensionCommand(this.robot.deposit,400),
-                        new DepositPivotingCommand(this.robot.deposit, 1,1,0),
-                        new WaitCommand(500),
-                        new VerticalExtensionCommand(this.robot.deposit, 0),
-                        new InstantCommand(() -> this.robot.deposit.ClawControl(0))
+                       )
+                        ,new InstantCommand( () -> this.robot.deposit.SetServoPoses(0.5,0.5,0.5 )),
+                       new InstantCommand( () ->  this.robot.intake.IntakeToAutoPose())
+                       ,
 
+                        new WaitCommand(300),
+                        new VerticalExtensionCommand(this.robot.deposit,100),
+                        new DepositPivotingCommand(this.robot.deposit, 0.45,0.45,0),
+                        new WaitCommand(1000),
+                        new VerticalRetractionCommand(this.robot.deposit).alongWith(
+                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.2))
+                        ),
+                        new InstantCommand( () -> this.robot.deposit.ClawControl(0)),
+                        new DepositPivotingCommand(this.robot.deposit,0,0,0.96),
+                        new SillyFollowPathCommand(
+                                this.robot.drivetrain, this.barToHuman, false
+                        )
                 )
 
         );
