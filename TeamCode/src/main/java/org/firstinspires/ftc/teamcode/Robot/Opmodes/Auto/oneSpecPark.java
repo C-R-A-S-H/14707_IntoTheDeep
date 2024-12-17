@@ -61,11 +61,11 @@ public class oneSpecPark extends OpMode {
                 new Point(133.682, 82.318, Point.CARTESIAN),
                 new Point(128.075, 82.318, Point.CARTESIAN),
                 new Point(130.318, 77.383, Point.CARTESIAN),
-                new Point(117.981, 77.832, Point.CARTESIAN)
+                new Point(118, 78, Point.CARTESIAN)
         ));
 
         barToHuman = new Path( new BezierCurve(
-                new Point(117.981, 77.832, Point.CARTESIAN),
+                new Point(118, 78, Point.CARTESIAN),
                 new Point(133.234, 89.047, Point.CARTESIAN),
                 new Point(131.664, 124.486, Point.CARTESIAN)
         ));
@@ -73,6 +73,8 @@ public class oneSpecPark extends OpMode {
         this.scorePreload.setReversed(true);
 
         this.barToHuman.setReversed(false);
+
+
 
         this.robot.drivetrain.follower.pathBuilder().addPath(scorePreload).setReversed(true);
 
@@ -95,8 +97,8 @@ public class oneSpecPark extends OpMode {
                        ,
 
                         new WaitCommand(300),
-                        new VerticalExtensionCommand(this.robot.deposit,100),
-                        new DepositPivotingCommand(this.robot.deposit, 0.45,0.45,0),
+                        new VerticalExtensionCommand(this.robot.deposit,300),
+                        new DepositPivotingCommand(this.robot.deposit, 0.55,0.55,0),
                         new WaitCommand(2000),
                         new VerticalRetractionCommand(this.robot.deposit).alongWith(
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0.2))
