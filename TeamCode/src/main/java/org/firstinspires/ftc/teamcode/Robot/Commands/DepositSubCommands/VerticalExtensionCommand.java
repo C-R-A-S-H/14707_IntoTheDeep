@@ -19,7 +19,7 @@ public class VerticalExtensionCommand extends CommandBase {
 
     @Override
     public void execute() {
-        this.deposit.SetSlidePose(this.pose);
+        this.deposit.SetSlidePose(pose);
     }
 
     @Override
