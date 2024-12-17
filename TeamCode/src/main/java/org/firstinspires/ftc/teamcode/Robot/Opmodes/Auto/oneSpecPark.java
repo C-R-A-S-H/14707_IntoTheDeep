@@ -29,13 +29,19 @@ public class oneSpecPark extends OpMode {
         this.robot.drivetrain.follower.setStartingPose(new Pose(135.9,80.74766355140187,0));
         this.buildPaths();
 
-        this.robot.deposit.ClawControl(.45);
 
-
-
-        this.robot.intake.setSlidePower(-0.3);
 
         scheduleCommands();
+    }
+
+    @Override
+    public void start() {
+        this.robot.deposit.ClawControl(.35);
+
+        this.robot.intake.setSlidePower(-0.2);
+        this.robot.deposit.SetServoPoses(0.5,0.5,0.5 );
+        this.robot.intake.IntakeToAutoPose();
+        super.start();
     }
 
 
@@ -52,17 +58,16 @@ public class oneSpecPark extends OpMode {
 
     public void buildPaths(){
         scorePreload = new Path(new BezierCurve(
-                new Point(135.701, 81.869, Point.CARTESIAN),
-                new Point(120.673, 80.748, Point.CARTESIAN),
-                new Point(122.467, 73.794, Point.CARTESIAN),
-                new Point(113.944, 73.570, Point.CARTESIAN)
-
+                new Point(133.682, 82.318, Point.CARTESIAN),
+                new Point(128.075, 82.318, Point.CARTESIAN),
+                new Point(130.318, 77.383, Point.CARTESIAN),
+                new Point(117.981, 77.832, Point.CARTESIAN)
         ));
 
         barToHuman = new Path( new BezierCurve(
-                new Point(113.944, 74.019, Point.CARTESIAN),
+                new Point(117.981, 77.832, Point.CARTESIAN),
                 new Point(133.234, 89.047, Point.CARTESIAN),
-                new Point(134.131, 118.879, Point.CARTESIAN)
+                new Point(131.664, 124.486, Point.CARTESIAN)
         ));
 
         this.scorePreload.setReversed(true);
@@ -92,7 +97,7 @@ public class oneSpecPark extends OpMode {
                         new WaitCommand(300),
                         new VerticalExtensionCommand(this.robot.deposit,100),
                         new DepositPivotingCommand(this.robot.deposit, 0.45,0.45,0),
-                        new WaitCommand(1000),
+                        new WaitCommand(2000),
                         new VerticalRetractionCommand(this.robot.deposit).alongWith(
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0.2))
                         ),
@@ -101,6 +106,7 @@ public class oneSpecPark extends OpMode {
                         new SillyFollowPathCommand(
                                 this.robot.drivetrain, this.barToHuman, false
                         )
+
                 )
 
         );

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,6 +26,7 @@ public class Deposit extends PedrioSubsystem {
     private Servo DepositPivot2;//on the right
     private Servo DepositClaw;
 
+    private double setpoint = 0;
 
 
     public MotorEx LeftVSlide;
@@ -48,6 +50,9 @@ public class Deposit extends PedrioSubsystem {
 
         this.LeftVSlide.setInverted(true);
         this.RightVSlide.setInverted(true);
+
+        this.LeftVSlide.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        this.RightVSlide.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
     }
 
     public void SetSlidePower(double WantedPower) {
@@ -81,6 +86,10 @@ public class Deposit extends PedrioSubsystem {
         this.RightVSlide.resetEncoder();
     }
 
+    public void setSetpoint(double setpoint){
+        this.setpoint = setpoint;
+    }
+
     private boolean tolerance(double value,double min,double max){
         return value >= min && value <= max;
     }
@@ -93,6 +102,7 @@ public class Deposit extends PedrioSubsystem {
 
     @Override
     public void periodic() {
+        //SetSlidePose(this.setpoint);
         AverageSlideEncoderPose = averageError(this.LeftVSlide.getCurrentPosition(), this.RightVSlide.getCurrentPosition());
     }
 }
