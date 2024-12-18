@@ -50,9 +50,6 @@ public class oneSpecPark extends OpMode {
         this.robot.drivetrain.follower.update();
         this.robot =  Hardware.getInstance();
         this.robot.Loop();
-
-
-
         CommandScheduler.getInstance().run();
     }
 

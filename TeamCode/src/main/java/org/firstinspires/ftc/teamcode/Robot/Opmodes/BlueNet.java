@@ -63,10 +63,8 @@ public class BlueNet extends OpMode {
         depositSubsystem.SetSlidePose(10);  // Set to desired position (Ex: 10 encoder ticks)
         depositSubsystem.SetServoPoses(0.5, 0.5, 0.5);  // Set pivot positions (range 0 to 1)
         depositSubsystem.ClawControl(0.8);  // Claw position (1 = open | 0 = close)
-        if (depositSubsystem.SlideAtPoint()) {
-            // Code to execute when the slide reaches the desired position
-        }
-
+        //       if (depositSubsystem.SlideAtPoint()) {
+        // Code to execute when the slide reaches the desired position
 
         mvm.turnRight(0.3, -180);
         mvm.pause(500);
@@ -86,7 +84,8 @@ public class BlueNet extends OpMode {
             // Stop intake motor
             iC.end(false); // False to show it isn't interrupted
             // retract intake slides
-            new RetractionCommand(intakeSubsystem).initialize();        }
+            new RetractionCommand(intakeSubsystem).initialize();
+        }
         //-----------------------------------------------intake to outtake------------------------------------------------
 
         mvm.turnLeft(0.3, 10);
@@ -129,8 +128,10 @@ public class BlueNet extends OpMode {
         mvm.moveBackward(0.5, 3.6); //  B 0.3ft
         mvm.pause(500);
 
-        // Stick out and touch hang bar
     }
+
+    // Stick out and touch hang bar
+
 
     @Override
     public void loop() {
