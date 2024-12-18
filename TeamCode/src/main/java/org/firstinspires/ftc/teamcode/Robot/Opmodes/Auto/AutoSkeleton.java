@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.DepositPivotingCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.VerticalExtensionCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.VerticalRetractionCommand;
@@ -14,10 +15,12 @@ import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Silly
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.PoseUpdater;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 
+@Autonomous(name = "RAS")
 public class AutoSkeleton extends OpMode {
     private Hardware robot = Hardware.getInstance();
 
@@ -25,7 +28,8 @@ public class AutoSkeleton extends OpMode {
     private Path two;
     private Path three;
     private Path four;
-    private Intake IS;
+    private Telemetry telemetryA;
+    private PoseUpdater poseUpdater;
 
 
     @Override
@@ -45,6 +49,11 @@ public class AutoSkeleton extends OpMode {
     @Override
     public void loop() {            // Constantly running during Auto
         this.robot.drivetrain.follower.update();
+        telemetryA.addData("x", poseUpdater.getPose().getX());  // Prints out current LazerX position
+        telemetryA.addData("y", poseUpdater.getPose().getY());  // Prints out current LazerY position
+        telemetryA.addData("heading", poseUpdater.getPose().getHeading());  // Prints out current heading pos
+        telemetryA.addData("total heading", poseUpdater.getTotalHeading());
+        telemetry.update();
         this.robot =  Hardware.getInstance();
         this.robot.Loop();
         CommandScheduler.getInstance().run();
@@ -87,9 +96,10 @@ public class AutoSkeleton extends OpMode {
     private void ScheduleCommands() {
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new SillyFollowPathCommand(
-                                this.robot.drivetrain, this.one, true
-                        )
+                        new SillyFollowPathCommand(this.robot.drivetrain, this.one, true)
+
+
+                        // Auto Commands to follow go here
                 )
         );
     }
