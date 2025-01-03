@@ -10,11 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.DepositPivotingCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.VerticalExtensionCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DepositSubCommands.VerticalRetractionCommand;
+import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.FollowPathChainCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.SillyFollowPathCommand;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 
 @Autonomous(name = "RedSpeciment")
@@ -23,6 +25,8 @@ public class oneSpecPark extends OpMode {
 
     private Path scorePreload;
     private Path barToHuman;
+
+    private PathChain scorePreloadChain;
     @Override
     public void init() {
         this.robot.Init(hardwareMap);
@@ -69,14 +73,12 @@ public class oneSpecPark extends OpMode {
                 new Point(133.234, 89.047, Point.CARTESIAN),
                 new Point(131.664, 124.486, Point.CARTESIAN)
         ));
+        this.scorePreloadChain = this.robot.drivetrain.follower.pathBuilder().addPath(scorePreload).setReversed(true).build();
 
-        this.scorePreload.setReversed(true);
 
         this.barToHuman.setReversed(false);
 
 
-
-        this.robot.drivetrain.follower.pathBuilder().addPath(scorePreload).setReversed(true);
 
         this.robot.drivetrain.follower.pathBuilder().addPath(barToHuman).setReversed(false);
 
@@ -89,17 +91,17 @@ public class oneSpecPark extends OpMode {
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
 
-                       new SillyFollowPathCommand(
-                                this.robot.drivetrain,this.scorePreload,true
+                       new FollowPathChainCommand(
+                                this.robot.drivetrain,this.scorePreloadChain,true
                        )
                         ,new InstantCommand( () -> this.robot.deposit.SetServoPoses(0.5,0.5,0.5 )),
                        new InstantCommand( () ->  this.robot.intake.IntakeToAutoPose())
                        ,
 
                         new WaitCommand(300),
-                        new VerticalExtensionCommand(this.robot.deposit,300),
+                        new VerticalExtensionCommand(this.robot.deposit,350),
                         new DepositPivotingCommand(this.robot.deposit, 0.55,0.55,0),
-                        new WaitCommand(2000),
+                        new WaitCommand(700),
                         new VerticalRetractionCommand(this.robot.deposit).alongWith(
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0.2))
                         ),

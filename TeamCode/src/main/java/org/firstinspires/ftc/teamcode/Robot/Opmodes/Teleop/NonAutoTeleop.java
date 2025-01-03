@@ -36,6 +36,8 @@ public class NonAutoTeleop extends OpMode {
     public void init() {
         this.robot.Init(hardwareMap);
 
+        CommandScheduler.getInstance().cancelAll();
+
         this.driver1 = new GamepadEx(gamepad1);
         this.driver2 = new GamepadEx(gamepad2);
         this.robot.intake.IntakeUp();
@@ -76,7 +78,7 @@ public class NonAutoTeleop extends OpMode {
         );
 
         Button highBasket = new GamepadButton(driver2, GamepadKeys.Button.B).toggleWhenPressed(
-                new DepositPivotingCommand(this.robot.deposit,0.05,0.05,1)
+                new DepositPivotingCommand(this.robot.deposit,0,0,1)
                ,
                 new ConditionalCommand(
                         new DepositPivotingCommand(this.robot.deposit, 1,1,0),
