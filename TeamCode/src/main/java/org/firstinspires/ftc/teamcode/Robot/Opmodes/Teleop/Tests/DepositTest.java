@@ -22,21 +22,23 @@ public class DepositTest extends OpMode {
 
     @Override
     public void loop() {
-        //if(gamepad1.a){
-        //    SetServoPoses(0,0,1); //picking up pose 0 0 1
-       // }
-      //  if (gamepad1.b) {
-       //     SetServoPoses(1,1,0); // 1 1 0
-      //  }
-
-
         if(gamepad1.a){
+           SetServoPoses(0,0,1); //picking up pose 0 0 1
+       }
+       if (gamepad1.b){
+           SetServoPoses(1,1,0); // 1 1 0
+    }
+
+
+       /* if(gamepad1.a){
             ClawControl(0);
        }
         if(gamepad1.b){
-           ClawControl(0.33);
+           ClawControl(0.30);
         }
 
+
+        */
     }
     public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){
         this.DepositPivot1Left.setPosition(LeftPivot1);

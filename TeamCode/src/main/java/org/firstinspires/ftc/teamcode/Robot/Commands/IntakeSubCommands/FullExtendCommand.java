@@ -19,7 +19,7 @@ public class FullExtendCommand extends CommandBase {
     @Override
     public void initialize() {
         this.intake.DropDown();
-        this.intake.SetPower(-2000);
+        this.intake.SetPower(-1000);
     }
 
     @Override

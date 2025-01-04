@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.Follo
 import org.firstinspires.ftc.teamcode.Robot.Commands.DrivetrainSubcommands.SillyFollowPathCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.FullExtendCommand;
 import org.firstinspires.ftc.teamcode.Robot.Commands.IntakeSubCommands.RetractionCommand;
+import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
@@ -37,6 +38,8 @@ public class fourSample extends OpMode {
         this.robot.drivetrain.follower.setStartingPose(new Pose(136.5981308411215,33.420560747663544,0));
         this.BuildPaths();
         this.robot.deposit.resetSlideEncoders();
+        Config.isAuto = true;
+
 
     }
 
@@ -90,7 +93,7 @@ public class fourSample extends OpMode {
                 new BezierCurve(
                         new Point(126.505, 21.981, Point.CARTESIAN),
                         new Point(130.093, 22.654, Point.CARTESIAN),
-                        new Point(132.561, 19.963, Point.CARTESIAN)
+                        new Point(130.766, 18.841, Point.CARTESIAN)
                 )
         );
         scoreSamplePreload.setReversed(true);
@@ -110,10 +113,10 @@ public class fourSample extends OpMode {
     private void ScheduleCommands(){
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
-                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.37)),
+                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.3)),
                 new ParallelCommandGroup(
                         new SillyFollowPathCommand(this.robot.drivetrain,scoreSamplePreload,true),
-                        new VerticalExtensionCommand(this.robot.deposit,1070),
+                        new VerticalExtensionCommand(this.robot.deposit,1090),
                         new DepositPivotingCommand(this.robot.deposit,0.5,0.5,0)
                 ),
                         new WaitCommand(300),
@@ -126,10 +129,10 @@ public class fourSample extends OpMode {
                         new WaitCommand(500),
                         new RetractionCommand(this.robot.intake),
                         new WaitCommand(1000),
-                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.37)),
+                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.3)),
                         new ParallelCommandGroup(
                                 new SillyFollowPathCommand(this.robot.drivetrain,firstSampleScore,true),
-                                new VerticalExtensionCommand(this.robot.deposit,1070),
+                                new VerticalExtensionCommand(this.robot.deposit,1090),
                                 new DepositPivotingCommand(this.robot.deposit,0.5,0.5,0)
                         ), new WaitCommand(300),
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0)),
@@ -143,7 +146,7 @@ public class fourSample extends OpMode {
                         new WaitCommand(1000),
                         new ParallelCommandGroup(
                                 new SillyFollowPathCommand(this.robot.drivetrain,secondSampleScore,true),
-                                new VerticalExtensionCommand(this.robot.deposit,1070),
+                                new VerticalExtensionCommand(this.robot.deposit,1090),
                                 new DepositPivotingCommand(this.robot.deposit,0.5,0.5,0)
                         ),
                         new WaitCommand(1000),

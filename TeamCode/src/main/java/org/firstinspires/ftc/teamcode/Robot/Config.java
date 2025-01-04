@@ -49,7 +49,7 @@ public class Config {
     public static double ClawPivotTransferPose = 1;
     public static double ClawPivotScoreBasketPose = 0;
 
-    public static double ClawClosePose = 0;
+    public static double ClawClosePose = 0.3;
     public static double ClawOpenPose = 0;
 
     public static double HighBasketSlideSetpoint = 1200;
