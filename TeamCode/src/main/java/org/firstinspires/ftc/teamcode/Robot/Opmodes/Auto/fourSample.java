@@ -124,10 +124,12 @@ public class fourSample extends OpMode {
                         new WaitCommand(200),
                         new DepositPivotingCommand(this.robot.deposit,0,0,1),
                         new VerticalRetractionCommand(this.robot.deposit),
+
+
                         new FollowPathCommand(this.firstSamplePickup,this.robot.drivetrain),
-                        new FullExtendCommand(this.robot.intake),
+                        //new FullExtendCommand(this.robot.intake),
                         new WaitCommand(500),
-                        new RetractionCommand(this.robot.intake),
+                       // new RetractionCommand(this.robot.intake),
                         new WaitCommand(1000),
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0.3)),
                         new ParallelCommandGroup(
@@ -140,9 +142,9 @@ public class fourSample extends OpMode {
                         new DepositPivotingCommand(this.robot.deposit,0,0,1),
                         new VerticalRetractionCommand(this.robot.deposit),
                         new FollowPathCommand(this.secondSamplePickup,this.robot.drivetrain),
-                        new FullExtendCommand(this.robot.intake),
+                       // new FullExtendCommand(this.robot.intake),
                         new WaitCommand(500),
-                        new RetractionCommand(this.robot.intake),
+                       // new RetractionCommand(this.robot.intake),
                         new WaitCommand(1000),
                         new ParallelCommandGroup(
                                 new SillyFollowPathCommand(this.robot.drivetrain,secondSampleScore,true),
@@ -152,6 +154,8 @@ public class fourSample extends OpMode {
                         new WaitCommand(1000),
                         new DepositPivotingCommand(this.robot.deposit,0,0,1),
                         new VerticalRetractionCommand(this.robot.deposit)
+
+
                 )
         );
     }

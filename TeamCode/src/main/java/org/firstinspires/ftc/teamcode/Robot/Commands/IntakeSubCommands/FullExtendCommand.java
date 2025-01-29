@@ -12,14 +12,15 @@ import java.util.List;
 
 public class FullExtendCommand extends CommandBase {
     private Intake intake;
-    public FullExtendCommand(Intake intake){
+    private double pose;
+    public FullExtendCommand(Intake intake, double pose){
         this.intake = intake;
+        this.pose = pose;
 
     }
     @Override
     public void initialize() {
-        this.intake.DropDown();
-        this.intake.SetPower(-1000);
+        this.intake.SetPower(-2000);
     }
 
     @Override
@@ -27,7 +28,7 @@ public class FullExtendCommand extends CommandBase {
         //ea = ll.getDistanceFromSample(ll.getColorData().get(0));
 
         this.intake.intakeState = IntakeState.EXTENDING;
-        this.intake.SetSlidePos(Config.FullyExtendedSlideEncPos);
+        this.intake.SetSlidePos(pose);
 
 
     }
@@ -39,6 +40,6 @@ public class FullExtendCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true; // this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
+        return this.intake.SlideAtPoint(); // this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
     }
 }

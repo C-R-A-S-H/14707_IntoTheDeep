@@ -52,6 +52,8 @@ public class NonAutoTeleop extends OpMode {
 
         this.robot.intake.setSlidePower(this.driver2.getLeftY());
 
+        this.robot.intake.setServoPower(this.driver2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - this.driver2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER));
+
         this.robot.drivetrain.follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
 
         this.robot.drivetrain.follower.update();
@@ -63,12 +65,12 @@ public class NonAutoTeleop extends OpMode {
       //Button class
         Button intake = new GamepadButton(driver2, GamepadKeys.Button.A).toggleWhenPressed(
                 new SequentialCommandGroup(
-                new InstantCommand(() -> this.robot.intake.DropDown()),
+                //new InstantCommand(() -> this.robot.intake.DropDown()),
                 new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(-2000))
                 ),
                 new SequentialCommandGroup(
-                        new InstantCommand(() -> this.robot.intake.IntakeUp()),
-                        new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(-2000))
+                       // new InstantCommand(() -> this.robot.intake.IntakeUp()),
+                        new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(0))
                 )
         );
 
@@ -77,7 +79,7 @@ public class NonAutoTeleop extends OpMode {
                ,
                 new ConditionalCommand(
                         new DepositPivotingCommand(this.robot.deposit, 1,1,0),
-                        new DepositPivotingCommand(this.robot.deposit,0.5,0.5,0),
+                        new DepositPivotingCommand(this.robot.deposit,0.55,0.55,0),
                         () -> ScoreSpeciments
                 )
 

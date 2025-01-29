@@ -26,6 +26,10 @@ public class Config {
     public static PIDController HorizontalController = new PIDController(0.03, 0, 0);
     public static PIDController VerticalController = new PIDController(0.035, 0, 0);
 
+    public static PIDController LeftIntakePivotController = new PIDController(0.017,0,0);
+    public static PIDController RightIntakePivotController = new PIDController(0.017,0,0);
+
+
     public static double HorizontalSlideFF = -0.1;
     public static double VerticalSlideFF = 0.1;
     //public static PIDController DropDownController = new PIDController(0.001, 0, 0);

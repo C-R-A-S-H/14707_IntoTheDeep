@@ -69,7 +69,7 @@ public class Deposit extends PedrioSubsystem {
         double PositionAverage = (double) (this.LeftVSlide.getCurrentPosition() + this.RightVSlide.getCurrentPosition()) / 2;
         double Value = Config.VerticalController.calculate(PositionAverage, WantedPos);
 
-        SetSlidePower(Value);
+        SetSlidePower(Value + 0.15);
     }
     
     public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){

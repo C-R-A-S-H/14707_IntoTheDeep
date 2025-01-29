@@ -1,10 +1,17 @@
 package org.firstinspires.ftc.teamcode.Robot.Subsystems;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
 import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
@@ -16,18 +23,42 @@ public class Intake extends PedrioSubsystem {
     private MotorEx IntakeMotor;
     private MotorEx HsSlide;
 
-    public Servo DropDownLeft;
-    public Servo DropDownRight;
+    public CRServo DropDownLeft;
+    public CRServo  DropDownRight;
+
+    public ColorRangeSensor sensor;
+    public DistanceSensor distanceSensor;
+
 
     public double setpoint;
+
+    private double intakePivotSetpoint = 355;
+
+    private PIDController DropPid = new PIDController(0.01,0,0);
 
     public Intake(HardwareMap hmap){
         this.HsSlide = new MotorEx(hmap, "HsSlide");
         this.IntakeMotor = new MotorEx(hmap,"IntakeMotor");
-        this.DropDownLeft = hmap.get(Servo.class, "DropDownLeft");
-        this.DropDownRight = hmap.get(Servo.class,"DropDownRight");
+        this.DropDownLeft = hmap.get(CRServo.class, "DropDownLeft");
+        this.DropDownRight = hmap.get(CRServo.class,"DropDownRight");
+
+        this.DropDownLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        this.sensor = hmap.get(ColorRangeSensor.class,"s");
+        this.distanceSensor = hmap.get(DistanceSensor.class,"d");
+
+        //this.LeftServoPose = hmap.get(AnalogInput.class,"LeftPose");
+        //this.RightServoPose = hmap.get(AnalogInput.class, "RightPose");
 
         this.HsSlide.setInverted(true);
+    }
+
+    public PIDController getDropPid(){
+        return this.DropPid;
+    }
+
+    public boolean GetSampleIntaked(){
+        return this.sensor.getLightDetected() > 0.3;
     }
 
     public IntakeState intakeState = IntakeState.DISABLED;
@@ -52,19 +83,22 @@ public class Intake extends PedrioSubsystem {
     }
 
     public void IntakeToAutoPose(){
-        this.DropDownLeft.setPosition(0.9);
-        this.DropDownRight.setPosition(0.9);
+        this.intakePivotSetpoint = 355;
     }
     public void DropDown() {
-        this.DropDownLeft.setPosition(Config.DropDownPoseLeft);
-        this.DropDownRight.setPosition(Config.DropDownPoseRight);
+        this.intakePivotSetpoint = 10;
         this.intakeState = IntakeState.EXTENDING;
     }
     public void IntakeUp(){
-        this.DropDownLeft.setPosition(Config.IntakeUpPoseLeft);
-        this.DropDownRight.setPosition(Config.IntakeUpPoseRight);
+        this.intakePivotSetpoint = 355;
         this.intakeState = IntakeState.RETRACTING;
     }
+
+    public void setServoPower(double power){
+        this.DropDownLeft.setPower(-power);
+        this.DropDownRight.setPower(-power);
+    }
+
 
     public void SetSlidePos(double WantedPos){
         //this.setpoint = WantedPos;
@@ -76,6 +110,9 @@ public class Intake extends PedrioSubsystem {
         this.HsSlide.set(Value);
     }
 
+    public boolean SlideAtPoint(){
+        return this.tolerance(this.HsSlide.getCurrentPosition(), -2,2);
+    }
 
     public void ExtendLimelight(double distance){
         double Value = Config.HorizontalController.calculate(Config.TolerantDistanceFromSample,distance);
@@ -102,6 +139,14 @@ public class Intake extends PedrioSubsystem {
     public void periodic() {
        // SetSlidePos(setpoint);
         this.HorizontalEncTicks = this.HsSlide.getCurrentPosition();
+
+        //double Rightposition = RightServoPose.getVoltage() / 3.3 * 360;
+        //double Leftposition = LeftServoPose.getVoltage() / 3.3 * 360;
+
+        //this.DropDownLeft.setPower(Config.LeftIntakePivotController.calculate(Math.abs(Leftposition),this.intakePivotSetpoint));
+        //this.DropDownRight.setPower(Config.RightIntakePivotController.calculate(Math.abs(Rightposition),this.intakePivotSetpoint));
+
+
     }
 
     public boolean tolerance(double value,double min,double max){
