@@ -1,35 +1,30 @@
 package org.firstinspires.ftc.teamcode.Pedrio.Vision;
 
 
+
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.hardware.limelightvision.LLResult;
+
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.Pedrio.PedrioSubsystem;
-import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Hardware;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 public class LimeLightHelper extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
-    private double heading;
 
     private PIDController LignUpPid = new PIDController(0.017,0,0);
 
 
-    public void PipelineSwitch(int index) {
-        this.robot.limelight3A.pipelineSwitch(index);
-    }
-    public Pose3D GetPosition(){
-        return this.robot.limelight3A.getLatestResult().getBotpose();
-    }
+
 
     public Limelight3A getLL(){
         return this.robot.limelight3A;
@@ -96,38 +91,42 @@ public class LimeLightHelper extends PedrioSubsystem {
     public double getDistanceFromSample(List<Double> sample){
         double offset = sample.get(1);
 
-        double angleToGoalDegrees = Config.LLAngle + offset;
-        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-        double distanceFromLimelightToGoalInches = (Config.SamepleHeight - Config.LLHeight) / Math.tan(angleToGoalRadians);
+    public void PipelineSwitch(int index) {
+        robot.limelight3A.pipelineSwitch(index);
 
-        return distanceFromLimelightToGoalInches;
+
+
 
     }
+    public Pose3D GetPosition(){
+        return robot.limelight3A.getLatestResult().getBotpose();
 
-    public boolean checkForValidTags(){
-        return this.robot.limelight3A.getLatestResult().getBotposeTagCount() >= 1;
+
+    }
+    public List<LLResultTypes.FiducialResult> GetIDResults() {
+        return robot.limelight3A.getLatestResult().getFiducialResults();
     }
 
-    public void updateHeading(double heading){
-        this.robot.limelight3A.updateRobotOrientation(heading);
-        this.heading = heading;
+    public Collection<LLResultTypes.BarcodeResult> GetBarResults() {
+        return robot.limelight3A.getLatestResult().getBarcodeResults();
     }
 
-    public Pose2d getPose(){
-        Pose3D pose = this.robot.limelight3A.getLatestResult().getBotpose_MT2();
-
-        return new Pose2d(
-                pose.getPosition().x,
-                pose.getPosition().y,
-                new Rotation2d(this.heading)
-        );
+    public Collection<LLResultTypes.ClassifierResult> GetClassifierResults(){
+        return robot.limelight3A.getLatestResult().getClassifierResults();
     }
+
+
+
+
 
     @Override
     public void init() {
+
         this.robot.limelight3A.start();
         this.robot.limelight3A.pipelineSwitch(0);
+        robot.limelight3A.start();
+
     }
 
     @Override

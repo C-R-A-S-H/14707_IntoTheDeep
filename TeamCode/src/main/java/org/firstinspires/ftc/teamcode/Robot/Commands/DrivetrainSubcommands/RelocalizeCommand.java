@@ -19,10 +19,10 @@ public class RelocalizeCommand extends CommandBase {
     @Override
     public void initialize() {
         //this.ll.updateHeading(this.dt.getRawIMUHeadingDegrees());
-        if(this.ll.checkForValidTags()) {
-            Pose2d pose = this.ll.getPose();
-            Config.llPose = pose;
-        }
+//        if(this.ll.checkForValidTags()) {
+//            Pose2d pose = this.ll.getPose();
+//            Config.llPose = pose;
+//        }
     }
 
     @Override
