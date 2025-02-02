@@ -23,8 +23,8 @@ public class Intake extends PedrioSubsystem {
     private MotorEx IntakeMotor;
     private MotorEx HsSlide;
 
-    public CRServo DropDownLeft;
-    public CRServo  DropDownRight;
+    public Servo DropDownLeft;
+    public Servo  DropDownRight;
 
     public ColorRangeSensor sensor;
     public DistanceSensor distanceSensor;
@@ -34,16 +34,16 @@ public class Intake extends PedrioSubsystem {
 
     private double intakePivotSetpoint = 355;
 
-    private PIDController DropPid = new PIDController(0.01,0,0);
+    private PIDController DropPid = new PIDController(0.213,0,0.03);
 
     public Intake(HardwareMap hmap){
         this.HsSlide = new MotorEx(hmap, "HsSlide");
         this.IntakeMotor = new MotorEx(hmap,"IntakeMotor");
-        this.DropDownLeft = hmap.get(CRServo.class, "DropDownLeft");
-        this.DropDownRight = hmap.get(CRServo.class,"DropDownRight");
+        this.DropDownLeft = hmap.get(Servo.class, "DropDownLeft");
+        this.DropDownRight = hmap.get(Servo.class,"DropDownRight");
 
-        this.DropDownLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        //this.DropDownLeft.setDirection(Servo.Direction.REVERSE);
         this.sensor = hmap.get(ColorRangeSensor.class,"s");
         this.distanceSensor = hmap.get(DistanceSensor.class,"d");
 
@@ -86,17 +86,21 @@ public class Intake extends PedrioSubsystem {
         this.intakePivotSetpoint = 355;
     }
     public void DropDown() {
-        this.intakePivotSetpoint = 10;
-        this.intakeState = IntakeState.EXTENDING;
+        this.DropDownLeft.setPosition(1);
+        this.DropDownRight.setPosition(1);
+       // this.intakePivotSetpoint = 0.1;
+       // this.intakeState = IntakeState.EXTENDING;
     }
     public void IntakeUp(){
-        this.intakePivotSetpoint = 355;
-        this.intakeState = IntakeState.RETRACTING;
+        this.DropDownRight.setPosition(.1);
+        this.DropDownLeft.setPosition(.1);
+       // this.intakePivotSetpoint = 1;
+        //this.intakeState = IntakeState.RETRACTING;
     }
 
     public void setServoPower(double power){
-        this.DropDownLeft.setPower(-power);
-        this.DropDownRight.setPower(-power);
+      //  this.DropDownLeft.setPower(-power);
+       // this.DropDownRight.setPower(-power);
     }
 
 
@@ -110,8 +114,14 @@ public class Intake extends PedrioSubsystem {
         this.HsSlide.set(Value);
     }
 
-    public boolean SlideAtPoint(){
-        return this.tolerance(this.HsSlide.getCurrentPosition(), -2,2);
+    public boolean SlideAtPoint(double pose){
+        if (this.tolerance(this.HsSlide.getCurrentPosition(), pose -2,pose +2)){
+            this.HsSlide.set(0);
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     public void ExtendLimelight(double distance){

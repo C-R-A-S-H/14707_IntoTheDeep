@@ -23,8 +23,8 @@ public class Config {
     public static double HorizontalSlideTicksToInches = 10.3;
 
     //pid controllers and ff
-    public static PIDController HorizontalController = new PIDController(0.03, 0, 0);
-    public static PIDController VerticalController = new PIDController(0.035, 0, 0);
+    public static PIDController HorizontalController = new PIDController(0.028, 0.005, 0.001);
+    public static PIDController VerticalController = new PIDController(0.031, 0.005, 0);
 
     public static PIDController LeftIntakePivotController = new PIDController(0.017,0,0);
     public static PIDController RightIntakePivotController = new PIDController(0.017,0,0);

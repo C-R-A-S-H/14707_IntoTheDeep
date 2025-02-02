@@ -30,8 +30,8 @@ public class colorSensorTests extends OpMode {
         this.sensor = hardwareMap.get(ColorRangeSensor.class,"s");
         this.distanceSensor = hardwareMap.get(DistanceSensor.class,"d");
 
-        this.left = hardwareMap.get(CRServo.class, "DropDownLeft");
-        this.right = hardwareMap.get(CRServo.class,"DropDownRight");
+     //   this.left = hardwareMap.get(CRServo.class, "DropDownLeft");
+      //  this.right = hardwareMap.get(CRServo.class,"DropDownRight");
 
         this.left.setDirection(DcMotorSimple.Direction.REVERSE);
     }
@@ -51,8 +51,8 @@ public class colorSensorTests extends OpMode {
         if(gamepad1.b){
             setpoint = 127;
         }
-        this.left.setPower(-power);
-        this.right.setPower(-power);
+        //this.left.setPower(-power);
+        //this.right.setPower(-power);
         telemetry.update();
     }
 }

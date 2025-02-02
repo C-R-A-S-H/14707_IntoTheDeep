@@ -20,7 +20,7 @@ public class TeleopIntakeCommand extends SequentialCommandGroup {
     @Override
     public void initialize() {
         addCommands(
-                new TeleopExtendoCommand(this.intake),
+                //new TeleopExtendoCommand(this.intake),
                 new IntakeActivationCommand(this.intake,this.colorSensor)
         );
     }

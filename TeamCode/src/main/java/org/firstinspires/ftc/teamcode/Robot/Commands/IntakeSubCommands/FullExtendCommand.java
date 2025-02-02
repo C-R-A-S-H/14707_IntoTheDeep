@@ -40,6 +40,6 @@ public class FullExtendCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return this.intake.SlideAtPoint(); // this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
+        return this.intake.SlideAtPoint(this.pose); // this.intake.tolerance(this.intake.HorizontalEncTicks, Config.FullyExtendedSlideEncPos - 3,Config.FullyExtendedSlideEncPos + 3);
     }
 }

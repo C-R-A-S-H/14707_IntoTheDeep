@@ -19,9 +19,13 @@ public class DropDownCommand extends CommandBase {
 
     @Override
     public void execute() {
-        double power = this.intake.getDropPid().calculate(this.pose,this.intake.distanceSensor.getDistance(DistanceUnit.MM));
-
-        this.intake.setServoPower(power);
+        //double power = this.intake.getDropPid().calculate(this.pose,this.intake.distanceSensor.getDistance(DistanceUnit.MM));
+        if(this.pose < 50) {
+            this.intake.DropDown();
+        }else{
+            this.intake.IntakeUp();
+        }
+        //this.intake.setServoPower(power);
     }
 
     @Override
@@ -32,7 +36,7 @@ public class DropDownCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return tolerance(this.intake.getDropPid().calculate( this.pose ,this.intake.distanceSensor.getDistance(DistanceUnit.CM)),-2,2);
+        return tolerance(this.intake.distanceSensor.getDistance(DistanceUnit.MM), pose - 2, pose + 2);
     }
 
     private boolean tolerance(double value,double min,double max){

@@ -21,7 +21,7 @@ public class LimeLightHelper extends PedrioSubsystem {
     private final Hardware robot = Hardware.getInstance();
     private double heading;
 
-    private PIDController LignUpPid = new PIDController(0.015,0,0);
+    private PIDController LignUpPid = new PIDController(0.017,0,0);
 
 
     public void PipelineSwitch(int index) {

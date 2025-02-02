@@ -7,34 +7,37 @@ import org.firstinspires.ftc.teamcode.Robot.Config;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.IntakeState;
 import org.firstinspires.ftc.teamcode.Robot.Subsystems.Intake;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopExtendoCommand extends CommandBase {
     private Intake intake;
-    public TeleopExtendoCommand(Intake intake){
+    private DoubleSupplier val;
+    private BooleanSupplier pid;
+    public TeleopExtendoCommand(Intake intake, DoubleSupplier val, BooleanSupplier pid){
         this.intake = intake;
+        this.val = val;
+        this.pid = pid;
     }
 
-    @Override
-    public void initialize() {
-        this.intake.DropDown();
-    }
+
 
     @Override
     public void execute() {
-        if(this.intake.intakeState != IntakeState.RETRACTING) {
-           this.intake.SetSlidePos(Config.HorizontalSlideTeleopSetpoint);
+        if (!this.pid.getAsBoolean()) {
+            this.intake.SetSlidePos(val.getAsDouble() * 900);
         }
+
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.setSlideVelocity(0);
+
         super.end(interrupted);
     }
 
     @Override
     public boolean isFinished() {
-        return this.intake.tolerance(intake.HorizontalEncTicks, Config.HorizontalSlideTeleopSetpoint - 10, Config.HorizontalSlideTeleopSetpoint + 10);
+        return true;
     }
 }

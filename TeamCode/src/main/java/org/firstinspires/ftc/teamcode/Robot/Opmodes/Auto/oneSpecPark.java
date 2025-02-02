@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Robot.Opmodes.Auto;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -102,8 +103,9 @@ public class oneSpecPark extends OpMode {
                         new VerticalExtensionCommand(this.robot.deposit,350),
                         new DepositPivotingCommand(this.robot.deposit, 0.55,0.55,0),
                         new WaitCommand(700),
-                        new VerticalRetractionCommand(this.robot.deposit).alongWith(
-                        new InstantCommand( () -> this.robot.deposit.ClawControl(0.2))
+                        new ParallelCommandGroup(
+                            new VerticalRetractionCommand(this.robot.deposit),
+                            new InstantCommand( () -> this.robot.deposit.ClawControl(0.25))
                         ),
                         new InstantCommand( () -> this.robot.deposit.ClawControl(0)),
                         new DepositPivotingCommand(this.robot.deposit,0,0,0.96),

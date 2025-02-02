@@ -29,7 +29,7 @@ public class RetractionCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.setSlidePower(-.3);
+        this.intake.setSlidePower(-0.1);
 
     }
 
