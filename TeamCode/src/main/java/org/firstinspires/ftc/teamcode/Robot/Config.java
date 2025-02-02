@@ -23,8 +23,12 @@ public class Config {
     public static double HorizontalSlideTicksToInches = 10.3;
 
     //pid controllers and ff
-    public static PIDController HorizontalController = new PIDController(0.04, 0, 0);
-    public static PIDController VerticalController = new PIDController(0.02, 0, 0);
+    public static PIDController HorizontalController = new PIDController(0.028, 0.005, 0.001);
+    public static PIDController VerticalController = new PIDController(0.031, 0.005, 0);
+
+    public static PIDController LeftIntakePivotController = new PIDController(0.017,0,0);
+    public static PIDController RightIntakePivotController = new PIDController(0.017,0,0);
+
 
     public static double HorizontalSlideFF = -0.1;
     public static double VerticalSlideFF = 0.1;
@@ -49,7 +53,7 @@ public class Config {
     public static double ClawPivotTransferPose = 1;
     public static double ClawPivotScoreBasketPose = 0;
 
-    public static double ClawClosePose = 0;
+    public static double ClawClosePose = 0.3;
     public static double ClawOpenPose = 0;
 
     public static double HighBasketSlideSetpoint = 1200;

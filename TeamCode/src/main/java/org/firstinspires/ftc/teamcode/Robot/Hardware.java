@@ -45,7 +45,7 @@ public class Hardware {
     public Drivetrain drivetrain;
     public Intake intake;
     public Deposit deposit;
-    //public LimeLightHelper ll;
+    public LimeLightHelper ll;
 
     private List<PedrioSubsystem> subsystems = new ArrayList<>();
     public static Hardware getInstance(){
@@ -57,7 +57,7 @@ public class Hardware {
 
     public void Init(final HardwareMap hmap){
 
-        //this.limelight3A = hmap.get(Limelight3A.class,"ll");
+        this.limelight3A = hmap.get(Limelight3A.class,"ll");
 
         //this.intakeBeamBreak = new BeamBreak(hmap,"intakeBeamBreak");
         //this.transferColorSensor = hmap.get(NormalizedColorSensor.class, "transferColorSensor");
@@ -73,6 +73,9 @@ public class Hardware {
         this.subsystems.add(this.intake);
         this.subsystems.add(this.deposit);
 
+        this.ll = new LimeLightHelper();
+
+
         //this.otos = hmap.get(SparkFunOTOS.class, "otos");
         //this.imu = hmap.get(IMU.class, "imu");
 
@@ -87,6 +90,8 @@ public class Hardware {
         for(PedrioSubsystem Subsystem : this.subsystems){
             Subsystem.init();
         }
+        this.ll.init();
+
 
     }
     public void Loop(){

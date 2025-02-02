@@ -56,16 +56,20 @@ public class Deposit extends PedrioSubsystem {
     }
 
     public void SetSlidePower(double WantedPower) {
-        this.LeftVSlide.set(WantedPower);
-        this.RightVSlide.set(WantedPower);
+        this.LeftVSlide.setVelocity(WantedPower * 6000);
+        this.RightVSlide.setVelocity(WantedPower * 6000);
 
+    }
+    public void SetRawSlidePower(double power){
+        this.LeftVSlide.set(power);
+        this.RightVSlide.set(power);
     }
 
     public void SetSlidePose(double WantedPos) {
         double PositionAverage = (double) (this.LeftVSlide.getCurrentPosition() + this.RightVSlide.getCurrentPosition()) / 2;
         double Value = Config.VerticalController.calculate(PositionAverage, WantedPos);
 
-        SetSlidePower(Value);
+        SetSlidePower(Value + 0.15);
     }
     
     public void SetServoPoses(double LeftPivot1,double RightPivot1,double Pivot2){
@@ -102,6 +106,7 @@ public class Deposit extends PedrioSubsystem {
 
     @Override
     public void periodic() {
+
         //SetSlidePose(this.setpoint);
         AverageSlideEncoderPose = averageError(this.LeftVSlide.getCurrentPosition(), this.RightVSlide.getCurrentPosition());
     }

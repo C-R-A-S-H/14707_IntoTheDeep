@@ -24,7 +24,7 @@ public class AutoIntakeCommand extends SequentialCommandGroup {
     @Override
     public void initialize() {
         addCommands(
-                new FullExtendCommand(this.intake),
+                new FullExtendCommand(this.intake, Config.FullyExtendedSlideEncPos),
                 new IntakeActivationCommand(this.intake,this.transferColorSensor)
         );
     }

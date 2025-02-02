@@ -21,12 +21,12 @@ public class VerticalRetractionCommand extends CommandBase {
 
     @Override
     public void execute() {
-        this.deposit.SetSlidePose(-20);
+        this.deposit.SetSlidePower(-0.6);
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.deposit.SetSlidePower(-0.2);
+        this.deposit.SetSlidePower(0);
         this.deposit.resetSlideEncoders();
     }
 

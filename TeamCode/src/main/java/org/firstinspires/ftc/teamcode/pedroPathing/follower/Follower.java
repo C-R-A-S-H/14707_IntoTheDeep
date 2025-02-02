@@ -127,7 +127,7 @@ public class Follower {
     private PIDFController translationalPIDF = new PIDFController(FollowerConstants.translationalPIDFCoefficients);
     private PIDFController translationalIntegral = new PIDFController(FollowerConstants.translationalIntegral);
     private PIDFController secondaryHeadingPIDF = new PIDFController(FollowerConstants.secondaryHeadingPIDFCoefficients);
-    private PIDFController headingPIDF = new PIDFController(FollowerConstants.headingPIDFCoefficients);
+    public PIDFController headingPIDF = new PIDFController(FollowerConstants.headingPIDFCoefficients);
     private FilteredPIDFController secondaryDrivePIDF = new FilteredPIDFController(FollowerConstants.secondaryDrivePIDFCoefficients);
     private FilteredPIDFController drivePIDF = new FilteredPIDFController(FollowerConstants.drivePIDFCoefficients);
 
