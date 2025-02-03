@@ -111,9 +111,7 @@ public class NonAutoTeleop extends OpMode {
                 new InstantCommand( () -> this.robot.intake.SetIntakeVelocity(-2000)),
                 new InstantCommand( ()-> this.robot.intake.SetIntakeVelocity(2000))
         );
-        Button turnoff = new GamepadButton(driver1, GamepadKeys.Button.A).whenPressed(
-                new InstantCommand( () -> this.robot.intake.setIntakePower(0))
-        );
+
 
         Button ScoreModeSwitch = new GamepadButton(driver2, GamepadKeys.Button.LEFT_BUMPER).toggleWhenPressed(
                 new InstantCommand( ( ) -> changeScoreMode(true)),

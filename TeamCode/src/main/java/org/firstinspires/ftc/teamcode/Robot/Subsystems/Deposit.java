@@ -14,9 +14,6 @@ import org.firstinspires.ftc.teamcode.Robot.Subsystems.Enums.DepositStates;
 public class Deposit extends PedrioSubsystem {
 
 
-    public double LeftSlidePose = 0;
-    public double RightSlidePose = 0;
-
     public double AverageSlideEncoderPose = 0;
 
     public DepositStates depositStates = DepositStates.ScoringBasketsHigh;
@@ -59,10 +56,6 @@ public class Deposit extends PedrioSubsystem {
         this.LeftVSlide.setVelocity(WantedPower * 6000);
         this.RightVSlide.setVelocity(WantedPower * 6000);
 
-    }
-    public void SetRawSlidePower(double power){
-        this.LeftVSlide.set(power);
-        this.RightVSlide.set(power);
     }
 
     public void SetSlidePose(double WantedPos) {

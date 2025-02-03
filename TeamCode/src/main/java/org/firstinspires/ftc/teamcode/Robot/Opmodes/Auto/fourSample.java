@@ -188,7 +188,7 @@ public class fourSample extends OpMode {
                                         new InstantCommand( () -> this.robot.intake.SetPower(500)).andThen(
                                                 new WaitCommand(200)
                                         ).andThen(
-                                                new InstantCommand( () -> this.robot.intake.setIntakePower(-2000))
+                                                new InstantCommand( () -> this.robot.intake.setSlidePower(-2000))
                                         )
                                 )
                                 ),

@@ -73,7 +73,6 @@ public class Intake extends PedrioSubsystem {
     }
 
     public void setSlidePower(double power){this.HsSlide.set(power);}
-    public void setIntakePower(double power){this.HsSlide.set(power);}
 
 
     public void SetIntakeVelocity(double velocity){this.IntakeMotor.setVelocity(velocity);}
